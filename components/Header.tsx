@@ -93,8 +93,14 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
           />
         </div>
         <div className="flex md:hidden gap-x-2 items-center">
-          <MobileViewButton ButtonIcon={HiHome} />
-          <MobileViewButton ButtonIcon={BiSearch} />
+          <MobileViewButton
+            ButtonIcon={HiHome}
+            onClick={() => router.push("/")}
+          />
+          <MobileViewButton
+            ButtonIcon={BiSearch}
+            onClick={() => router.push("/search")}
+          />
         </div>
         <div className="flex justify-between items-center gap-x-4">
           {user ? (
