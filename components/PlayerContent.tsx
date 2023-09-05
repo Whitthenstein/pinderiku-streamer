@@ -32,7 +32,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
     }
 
     const currentIndex = player.ids.findIndex((id) => id === player.activeId);
-    const nextSong = player.ids[currentIndex + 1]; // TODO probably fix this to check before array index out of range
+    const nextSong = player.ids[currentIndex + 1];
 
     if (!nextSong) {
       return player.setId(player.ids[0]);
@@ -47,7 +47,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
     }
 
     const currentIndex = player.ids.findIndex((id) => id === player.activeId);
-    const previousSong = player.ids[currentIndex - 1]; // TODO probably fix this to check before array index out of range
+    const previousSong = player.ids[currentIndex - 1];
 
     if (!previousSong) {
       return player.setId(player.ids[player.ids.length - 1]);
