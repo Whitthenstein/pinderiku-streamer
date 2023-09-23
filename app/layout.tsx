@@ -26,6 +26,12 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
 
   return (
     <html lang="en">
+      <header>
+        <link
+          rel="icon"
+          href="/images/logo.svg"
+        />
+      </header>
       <body className={font.className}>
         <ToasterProvider />
         <SupabaseProvider>
