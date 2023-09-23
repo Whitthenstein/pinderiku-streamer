@@ -14,7 +14,7 @@ import getActiveProductsWithPrices from "@/actions/getActiveProductsWithPrices";
 const font = Figtree({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Spotify Clone",
+  title: "Streamer",
   description: "Listen to music!",
 };
 
@@ -26,12 +26,12 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
 
   return (
     <html lang="en">
-      <header>
+      <head>
         <link
           rel="icon"
           href="/images/logo.svg"
         />
-      </header>
+      </head>
       <body className={font.className}>
         <ToasterProvider />
         <SupabaseProvider>
