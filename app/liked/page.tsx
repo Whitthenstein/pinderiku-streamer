@@ -41,6 +41,7 @@ const Liked = async () => {
             >
               <Image
                 fill
+                sizes="w-32 lg:w-44"
                 src="/images/liked.png"
                 alt="Playlist"
                 className="object-cover"

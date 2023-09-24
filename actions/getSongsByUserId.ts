@@ -22,7 +22,7 @@ const getSongsByUserId = async (): Promise<Song[]> => {
     .order("created_at");
 
   if (error) {
-    console.log(error.message);
+    console.log("[GET_SONGS_BY_USER_ID]: ", error.message);
   }
 
   return (data as any) || [];

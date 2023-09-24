@@ -48,6 +48,7 @@ const SongItem: React.FC<SongItemProps> = ({ data, onClick }) => {
           className="object-cover"
           src={imagePath || "/images/liked.png"}
           fill
+          sizes="w-full"
           alt="Image"
         ></Image>
       </div>

@@ -20,7 +20,7 @@ const getSongsByTitle = async (title: string): Promise<Song[]> => {
     .order("created_at", { ascending: false });
 
   if (error) {
-    console.log(error);
+    console.log("[GET_SONGS_BY_TITLE]: ", error);
   }
 
   return (data as any) || [];

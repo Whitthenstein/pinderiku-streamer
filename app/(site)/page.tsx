@@ -2,6 +2,7 @@ import getSongs from "@/actions/getSongs";
 import Header from "@/components/Header";
 import ListItem from "@/components/ListItem";
 import PageContent from "./components/PageContent";
+import Image from "next/image";
 
 export const revalidate = 0;
 
@@ -21,7 +22,25 @@ const Home = async () => {
     >
       <Header className="">
         <div className="mb-2">
-          <h1 className="text-white text-3xl font-semibold">Welcome Back!</h1>
+          <div className="flex items-center gap-4">
+            <div
+              className="
+                  relative
+                  w-14 h-14
+              "
+            >
+              <Image
+                className="object-cover"
+                fill
+                src="/images/logo.svg"
+                alt="Logo"
+                sizes="w-14"
+              />
+            </div>
+            <h1 className="text-white text-3xl font-semibold">
+              Welcome back to Streamer!
+            </h1>
+          </div>
           <div
             className="grid
             grid-cols-1

@@ -34,14 +34,13 @@ const LikeButton: React.FC<LikeButtonProps> = ({ songId }) => {
         .from("liked_songs")
         .select("*")
         .eq("user_id", user.id)
-        .eq("song_id", songId)
-        .single();
+        .eq("song_id", songId);
 
       if (error) {
         console.log(error.message);
       }
 
-      if (!error && data) {
+      if (!error && data.length > 0) {
         setIsLiked(true);
       }
     };

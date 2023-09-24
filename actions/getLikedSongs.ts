@@ -11,6 +11,10 @@ const getlikedSongs = async (): Promise<Song[]> => {
     data: { session },
   } = await supabase.auth.getSession();
 
+  if (!session?.user?.id) {
+    return [];
+  }
+
   const { data, error } = await supabase
     .from("liked_songs")
     .select("*, songs(*)")
@@ -18,7 +22,7 @@ const getlikedSongs = async (): Promise<Song[]> => {
     .order("created_at", { ascending: false });
 
   if (error) {
-    console.log(error);
+    console.log("[GET_LIKED_SONGS]: ", error);
     return [];
   }
 
