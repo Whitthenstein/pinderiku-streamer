@@ -29,7 +29,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
       <head>
         <link
           rel="icon"
-          href="/images/favicon.ico"
+          href="/img/logo.png"
         />
       </head>
       <body className={font.className}>

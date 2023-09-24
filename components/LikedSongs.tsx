@@ -18,7 +18,7 @@ const LikedSongs = () => {
     >
       {user?.id && (
         <ListItem
-          image="/images/liked.png"
+          image="/img/liked.png"
           name="Liked Songs"
           href="liked"
         />

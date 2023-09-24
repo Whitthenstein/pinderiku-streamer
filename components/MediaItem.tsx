@@ -49,7 +49,7 @@ const MediaItem: React.FC<MediaItemProps> = ({ data, onClick }) => {
       >
         <Image
           fill
-          src={imageUrl || "/images/liked.png"}
+          src={imageUrl || "/img/liked.png"}
           alt="Image"
           sizes="min-w-[48px]"
           className="object-cover"

@@ -33,7 +33,7 @@ const Home = async () => {
               <Image
                 className="object-cover"
                 fill
-                src="/images/logo.svg"
+                src="/img/logo.svg"
                 alt="Logo"
                 sizes="w-14"
               />
