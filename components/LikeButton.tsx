@@ -8,7 +8,6 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 import useAuthModal from "@/hooks/useAuthModal";
 import { useUser } from "@/hooks/useUser";
-import { equal } from "assert";
 import { toast } from "react-hot-toast";
 
 interface LikeButtonProps {
