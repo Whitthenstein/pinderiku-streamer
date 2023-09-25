@@ -24,11 +24,47 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
   const VolumeIcon = volume === 0 ? HiSpeakerXMark : HiSpeakerWave;
 
   const onPlayNext = () => {
-    player.sound?.playNext();
+    if (player.urls.length === 0) {
+      return;
+    }
+
+    const currentIndex = player.urls.findIndex(
+      (url) => url === player.activeUrl
+    );
+    const nextSong = player.urls[currentIndex + 1];
+
+    player.sound?.pause();
+
+    if (!nextSong) {
+      player.setActiveUrl(player.urls[0]);
+      player.sound?.play(player.urls[0]);
+      return;
+    }
+
+    player.setActiveUrl(nextSong);
+    player.sound?.play(nextSong);
   };
 
   const onPlayPrevious = () => {
-    player.sound?.playPrevious();
+    if (player.urls.length === 0) {
+      return;
+    }
+
+    const currentIndex = player.urls.findIndex(
+      (url) => url === player.activeUrl
+    );
+    const previousSong = player.urls[currentIndex - 1];
+
+    player.sound?.pause();
+
+    if (!previousSong) {
+      player.setActiveUrl(player.urls[player.urls.length - 1]);
+      player.sound?.play(player.urls[player.urls.length - 1]);
+      return;
+    }
+
+    player.setActiveUrl(previousSong);
+    player.sound?.play(previousSong);
   };
 
   useEffect(() => {
@@ -54,6 +90,18 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
     }
   };
 
+  useEffect(() => {
+    if (!player.sound) {
+      player.setSound(new Audio(), {
+        onEnd: () => {
+          player.sound?.pause();
+          onPlayNext();
+        },
+      });
+    }
+    player.sound?.play(player.activeUrl);
+  }, [player]);
+
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 h-full">
       <div
@@ -61,13 +109,25 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
         flex
         w-full
         justify-start
-    "
+        gap-20
+        "
       >
         <div className="flex items-center gap-x-4">
           <MediaItem data={song} />
           <LikeButton songId={song.id} />
         </div>
+        <div
+          className="
+        flex
+        w-full
+        items-center
+        justify-center
+      "
+        >
+          Progress Bar here
+        </div>
       </div>
+
       <div
         className="
         flex
@@ -98,7 +158,6 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
           />
         </div>
       </div>
-
       <div
         className="
         hidden

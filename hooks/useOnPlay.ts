@@ -13,12 +13,6 @@ const useOnPlay = (songs: Song[]) => {
   const { user, subscription } = useUser();
   const publicSongsUrls = useLoadSongsUrls(songs);
 
-  useEffect(() => {
-    if (!player.sound) {
-      player.setSound(new Audio());
-    }
-  }, [player]);
-
   const onPlay = (url: string) => {
     if (!user) {
       return authModal.onOpen();
@@ -32,8 +26,8 @@ const useOnPlay = (songs: Song[]) => {
       publicUrlToTest.includes(url)
     );
 
-    player.sound?.setUrl(publicUrl ? publicUrl : null);
-    player.sound?.setUrls(publicSongsUrls);
+    player.setActiveUrl(publicUrl ? publicUrl : null);
+    player.setUrls(publicSongsUrls);
   };
 
   return onPlay;

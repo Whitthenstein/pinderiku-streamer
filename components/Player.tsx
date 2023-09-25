@@ -3,13 +3,14 @@
 import useGetSongBySongPath from "@/hooks/useGetSongBySongPath";
 import usePlayer from "@/hooks/usePlayer";
 import PlayerContent from "./PlayerContent";
+import { useEffect } from "react";
 
 const Player = () => {
   const player = usePlayer();
-  const songPath = player.sound?.activeUrl?.split("/").at(-1);
+  const songPath = player.activeUrl?.split("/").at(-1);
   const { song } = useGetSongBySongPath(songPath);
 
-  if (!song || !player.sound?.activeUrl || !player) {
+  if (!song || !player.activeUrl || !player) {
     return null;
   }
 
