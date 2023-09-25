@@ -100,6 +100,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
       });
     }
     player.sound?.play(player.activeUrl);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [player]);
 
   return (

@@ -3,7 +3,6 @@
 import useGetSongBySongPath from "@/hooks/useGetSongBySongPath";
 import usePlayer from "@/hooks/usePlayer";
 import PlayerContent from "./PlayerContent";
-import { useEffect } from "react";
 
 const Player = () => {
   const player = usePlayer();
