@@ -90,7 +90,7 @@ export const Library: React.FC<LibraryProps> = ({ songs }) => {
       >
         {songs.map((item) => (
           <MediaItem
-            onClick={(id: string) => onPlay(id)}
+            onClick={(url: string) => onPlay(url)}
             key={item.id}
             data={item}
           />

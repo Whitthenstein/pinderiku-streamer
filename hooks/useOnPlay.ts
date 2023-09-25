@@ -3,14 +3,23 @@ import usePlayer from "./usePlayer";
 import useAuthModal from "./useAuthModal";
 import { useUser } from "./useUser";
 import useSubscribeModal from "./useSubscribeModal";
+import { useEffect } from "react";
+import useLoadSongsUrls from "./useLoadSongsUrls";
 
 const useOnPlay = (songs: Song[]) => {
   const player = usePlayer();
   const subscribeModal = useSubscribeModal();
   const authModal = useAuthModal();
   const { user, subscription } = useUser();
+  const publicSongsUrls = useLoadSongsUrls(songs);
 
-  const onPlay = (id: string) => {
+  useEffect(() => {
+    if (!player.sound) {
+      player.setSound(new Audio());
+    }
+  }, [player]);
+
+  const onPlay = (url: string) => {
     if (!user) {
       return authModal.onOpen();
     }
@@ -19,8 +28,12 @@ const useOnPlay = (songs: Song[]) => {
       return subscribeModal.onOpen();
     }
 
-    player.setId(id);
-    player.setIds(songs.map((song) => song.id));
+    const publicUrl = publicSongsUrls.find((publicUrlToTest) =>
+      publicUrlToTest.includes(url)
+    );
+
+    player.sound?.setUrl(publicUrl ? publicUrl : null);
+    player.sound?.setUrls(publicSongsUrls);
   };
 
   return onPlay;

@@ -3,13 +3,13 @@ import { useSessionContext } from "@supabase/auth-helpers-react";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
 
-const useGetSongById = (id?: string) => {
+const useGetSongBySongPath = (song_path?: string | null) => {
   const [isLoading, setIsLoading] = useState(false);
   const [song, setSong] = useState<Song | undefined>(undefined);
   const { supabaseClient } = useSessionContext();
 
   useEffect(() => {
-    if (!id) {
+    if (!song_path) {
       return;
     }
 
@@ -19,7 +19,7 @@ const useGetSongById = (id?: string) => {
       const { data, error } = await supabaseClient
         .from("songs")
         .select("*")
-        .eq("id", id)
+        .eq("song_path", song_path)
         .single();
 
       if (error) {
@@ -32,9 +32,9 @@ const useGetSongById = (id?: string) => {
     };
 
     fetchSong();
-  }, [id, supabaseClient]);
+  }, [song_path, supabaseClient]);
 
   return useMemo(() => ({ isLoading, song }), [isLoading, song]);
 };
 
-export default useGetSongById;
+export default useGetSongBySongPath;

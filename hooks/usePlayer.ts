@@ -1,19 +1,19 @@
+import { SoundPlayer } from "@/sound-player";
 import { create } from "zustand";
 
 interface PlayerStore {
-  ids: string[];
-  activeId?: string;
-  setId: (id: string) => void;
-  setIds: (ids: string[]) => void;
-  reset: () => void;
+  sound: SoundPlayer | null;
+  showPlayer: boolean;
+  setSound: (newSound: HTMLAudioElement) => void;
+  setShowPlayer: (value: boolean) => void;
 }
 
 const usePlayer = create<PlayerStore>((set) => ({
-  ids: [],
-  activeId: undefined,
-  setId: (id: string) => set({ activeId: id }),
-  setIds: (ids: string[]) => set({ ids: ids }),
-  reset: () => set({ ids: [], activeId: undefined }),
+  sound: null,
+  showPlayer: false,
+  setSound: (newSound: HTMLAudioElement) =>
+    set({ sound: new SoundPlayer(newSound) }),
+  setShowPlayer: (value: boolean) => set({ showPlayer: value }),
 }));
 
 export default usePlayer;

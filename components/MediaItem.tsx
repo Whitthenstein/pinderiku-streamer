@@ -17,10 +17,11 @@ const MediaItem: React.FC<MediaItemProps> = ({ data, onClick }) => {
 
   const handleClick = () => {
     if (onClick) {
-      return onClick(data.id);
+      player.setShowPlayer(true);
+      return onClick(data.song_path);
     }
 
-    player.setId(data.id);
+    player.sound?.setUrl(data.song_path);
   };
 
   return (

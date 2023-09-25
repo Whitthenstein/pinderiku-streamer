@@ -6,6 +6,7 @@ import useLoadImage from "@/hooks/useLoadImage";
 import { Song } from "@/types";
 import React from "react";
 import PlayButton from "./PlayButton";
+import usePlayer from "@/hooks/usePlayer";
 
 interface SongItemProps {
   data: Song;
@@ -13,10 +14,14 @@ interface SongItemProps {
 }
 
 const SongItem: React.FC<SongItemProps> = ({ data, onClick }) => {
+  const player = usePlayer();
   const imagePath = useLoadImage(data);
   return (
     <div
-      onClick={() => onClick(data.id)}
+      onClick={() => {
+        player.setShowPlayer(true);
+        onClick(data.song_path);
+      }}
       className="
     relative
     group
