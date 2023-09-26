@@ -1,17 +1,18 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useMemo } from "react";
-import { HiHome } from "react-icons/hi";
-import { BiSearch } from "react-icons/bi";
-
-import Box from "./Box";
-import { SidebarItem } from "./SidebarItem";
-import { Library } from "./Library";
-import { Song } from "@/types";
-import usePlayer from "@/hooks/usePlayer";
 import { twMerge } from "tailwind-merge";
+import { useMemo } from "react";
+import { BiSearch } from "react-icons/bi";
+import { HiHome } from "react-icons/hi";
 
+import usePlayer from "@/hooks/usePlayer";
+import { useUser } from "@/hooks/useUser";
+
+import { Song } from "@/types";
+import Box from "./Box";
+import { Library } from "./Library";
+import { SidebarItem } from "./SidebarItem";
 interface SidebarProps {
   children: React.ReactNode;
   songs: Song[];
@@ -19,6 +20,7 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ children, songs }) => {
   const player = usePlayer();
+  const { user } = useUser();
   const pathname = usePathname();
   const routes = useMemo(
     () => [
@@ -44,7 +46,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children, songs }) => {
       flex
       h-full
     `,
-        player.activeId && "h-[calc(100%-80px)]"
+        player.activeUrl && user && "h-[calc(100%-80px)]"
       )}
     >
       <div

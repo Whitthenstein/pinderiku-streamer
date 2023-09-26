@@ -2,18 +2,19 @@
 
 import { useRouter } from "next/navigation";
 import React from "react";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { toast } from "react-hot-toast";
 import { twMerge } from "tailwind-merge";
 import { RxCaretLeft, RxCaretRight } from "react-icons/rx";
 import { HiHome } from "react-icons/hi";
 import { BiSearch } from "react-icons/bi";
 import { IconType } from "react-icons";
-import Button from "./Button";
-import useAuthModal from "@/hooks/useAuthModal";
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import { useUser } from "@/hooks/useUser";
 import { FaUserAlt } from "react-icons/fa";
-import { toast } from "react-hot-toast";
-import usePlayer from "@/hooks/usePlayer";
+
+import useAuthModal from "@/hooks/useAuthModal";
+import { useUser } from "@/hooks/useUser";
+
+import Button from "./Button";
 
 interface HeaderProps {
   children: React.ReactNode;
@@ -51,7 +52,6 @@ const DesktopViewButton: React.FC<ButtonProps> = ({ ButtonIcon, onClick }) => {
 const Header: React.FC<HeaderProps> = ({ children, className }) => {
   const authModal = useAuthModal();
   const router = useRouter();
-  const player = usePlayer();
 
   const supabaseClient = useSupabaseClient();
   const { user } = useUser();
@@ -59,7 +59,6 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
   const handleLogout = async () => {
     const { error } = await supabaseClient.auth.signOut();
 
-    player.reset();
     router.refresh();
 
     if (error) {

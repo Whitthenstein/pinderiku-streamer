@@ -38,7 +38,7 @@ const Home = async () => {
               />
             </div>
             <h1 className="text-white text-3xl font-semibold">
-              Welcome back to Streamer!
+              Welcome to Pinderiku&apos;s Song Stream and Archive!
             </h1>
           </div>
           <LikedSongs />

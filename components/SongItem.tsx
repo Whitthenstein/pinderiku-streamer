@@ -72,7 +72,7 @@ const SongItem: React.FC<SongItemProps> = ({ data, onClick }) => {
           className="
             text-neutral-400
             text-sm
-            pb-4
+            
             w-full
             truncate
         "
