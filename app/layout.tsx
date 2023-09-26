@@ -1,6 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Figtree } from "next/font/google";
+import { Lato } from "next/font/google";
 
 import Sidebar from "@/components/Sidebar";
 import SupabaseProvider from "@/providers/SupabaseProvider";
@@ -11,11 +11,11 @@ import getSongsByUserId from "@/actions/getSongsByUserId";
 import Player from "@/components/Player";
 import getActiveProductsWithPrices from "@/actions/getActiveProductsWithPrices";
 
-const font = Figtree({ subsets: ["latin"] });
+const font = Lato({ weight: "400", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Streamer",
-  description: "Listen to music!",
+  title: "Pinderiku",
+  description: "Listen to all of Pinderiku's songs!",
 };
 
 export const revalidate = 0;
