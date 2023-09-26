@@ -1,6 +1,7 @@
 import { Song } from "@/types";
 import React, { useEffect } from "react";
 import WaveSurfer from "wavesurfer.js";
+import HoverPlugin from "wavesurfer.js/dist/plugins/hover.js";
 import usePlayer from "@/hooks/usePlayer";
 
 interface WaveProps {
@@ -58,10 +59,19 @@ const Wave: React.FC<WaveProps> = ({ onPlayNext, setIsPlaying }) => {
       url: player.activeUrl!,
       height: 40,
       normalize: true,
-      barWidth: 3,
+      barWidth: 4,
       barGap: 2,
-      barRadius: 3,
+      barRadius: 2,
       dragToSeek: true,
+      plugins: [
+        HoverPlugin.create({
+          lineColor: "#16a34a",
+          lineWidth: 3,
+          labelBackground: "#222",
+          labelColor: "#fff",
+          labelSize: "11px",
+        }),
+      ],
     });
 
     const formatTime = (seconds: number) => {
@@ -70,6 +80,13 @@ const Wave: React.FC<WaveProps> = ({ onPlayNext, setIsPlaying }) => {
       const paddedSeconds = `0${secondsRemainder}`.slice(-2);
       return `${minutes}:${paddedSeconds}`;
     };
+
+    // Hover effect
+    const hover = document.querySelector("#hover") as HTMLElement;
+    const waveform = document.querySelector("#waveform");
+    waveform!.addEventListener("pointermove", (e: any) => {
+      hover!.style.width = `${e.offsetX}px`;
+    });
 
     wavesurfer.on("ready", () => {
       wavesurfer.play();
@@ -108,19 +125,23 @@ const Wave: React.FC<WaveProps> = ({ onPlayNext, setIsPlaying }) => {
 
   return (
     <div className="w-full md:pr-16 lg:pr-48 h-full pt-5 relative items-center">
-      <div id="waveform">
+      <div
+        id="waveform"
+        className="cursor-pointer"
+      >
         <div
           id="time"
-          className="absolute z-10 top-1/2 mt--1 translate-y--1/2 text-[11px] bg-opacity-75 left-0 md:pr-16 lg:pr-48"
+          className="pointer-events-none select-none absolute z-10 top-1/2 mt--1 translate-y--1/2 text-[11px] bg-opacity-75 left-0 md:pr-16 lg:pr-48"
         >
           0:00
         </div>
         <div
           id="duration"
-          className="absolute z-10 top-1/2 mt--1 translate-y--1/2 text-xs bg-opacity-75 right-0 md:pr-16 lg:pr-48"
+          className="pointer-events-none select-none absolute z-10 top-1/2 mt--1 translate-y--1/2 text-xs bg-opacity-75 right-0 md:pr-16 lg:pr-48"
         >
           0:00
         </div>
+        <div id="hover"></div>
       </div>
     </div>
   );
