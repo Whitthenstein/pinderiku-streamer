@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { usePrevious } from "@uidotdev/usehooks";
 
 import { BsPauseFill, BsPlayFill } from "react-icons/bs";
@@ -54,10 +54,10 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
     );
   };
 
-  const handlePlay = async () => {
+  const handlePlay = useCallback(async () => {
     player.sound?.playPause();
     setIsPlaying(!isPlaying);
-  };
+  }, [isPlaying, player.sound]);
 
   const toggleMute = () => {
     const isMuted = player.sound?.getMuted();
@@ -76,9 +76,19 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
     player.sound?.setVolume(value);
   };
 
+  useEffect(() => {
+    window.onkeyup = (event) => {
+      if (event.code === "Space") {
+        event.preventDefault();
+        player.sound?.playPause();
+        setIsPlaying(!isPlaying);
+      }
+    };
+  }, [isPlaying, player.sound]);
+
   return (
-    <div className="flex items-center w-full flex-col h-full bg-transparent">
-      <div className="grid grid-cols-2 md:grid-cols-3 h-full w-full bg-black px-4">
+    <div className="flex items-center w-full flex-col h-full">
+      <div className="grid grid-cols-2 md:grid-cols-3 h-full w-full px-4">
         <div
           className="
         flex

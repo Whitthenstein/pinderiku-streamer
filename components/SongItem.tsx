@@ -37,6 +37,7 @@ const SongItem: React.FC<SongItemProps> = ({ data, onClick }) => {
     hover:bg-neutral-400/10
     transition
     p-3
+    cena
     "
     >
       <div
@@ -72,7 +73,6 @@ const SongItem: React.FC<SongItemProps> = ({ data, onClick }) => {
           className="
             text-neutral-400
             text-sm
-            
             w-full
             truncate
         "

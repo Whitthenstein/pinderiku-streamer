@@ -6,6 +6,7 @@ interface PlayerStore {
   showPlayer: boolean;
   urls: string[];
   activeUrl: string | null;
+  currentIndex: number;
   setSound: (newSound: WaveSurfer) => void;
   setShowPlayer: (value: boolean) => void;
   setUrls: (urls: string[]) => void;
@@ -17,10 +18,12 @@ const usePlayer = create<PlayerStore>((set) => ({
   showPlayer: false,
   activeUrl: null,
   urls: [],
+  currentIndex: 0,
   setSound: (wave: WaveSurfer) => set({ sound: wave }),
   setShowPlayer: (value: boolean) => set({ showPlayer: value }),
   setUrls: (newUrls: string[]) => set({ urls: newUrls }),
   setActiveUrl: (url: string | null) => set({ activeUrl: url }),
+  setCurrentIndex: (index: number) => set({ currentIndex: index }),
 }));
 
 export default usePlayer;

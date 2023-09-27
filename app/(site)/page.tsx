@@ -37,9 +37,7 @@ const Home = async () => {
                 sizes="w-14"
               />
             </div>
-            <h1 className="text-white text-3xl font-semibold">
-              Welcome to Pinderiku&apos;s Song Stream and Archive!
-            </h1>
+            <h1 className="text-white text-3xl font-semibold">Pinderiku</h1>
           </div>
           <LikedSongs />
         </div>
