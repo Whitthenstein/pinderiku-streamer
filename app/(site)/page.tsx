@@ -30,7 +30,7 @@ const Home = async () => {
               "
             >
               <Image
-                className="object-cover"
+                className="object-cover animate-[spin_3s_linear_infinite]"
                 fill
                 src="/img/logo.svg"
                 alt="Logo"
