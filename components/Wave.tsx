@@ -148,7 +148,6 @@ const Wave: React.FC<WaveProps> = ({ onPlayNext, setIsPlaying }) => {
   useEffect(() => {
     if (player.activeUrl) {
       player.sound?.load(player.activeUrl);
-      console.log(player.activeUrl);
       setIsLoading(true);
     }
   }, [player.activeUrl, player.sound]);
