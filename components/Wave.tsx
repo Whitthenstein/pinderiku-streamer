@@ -83,10 +83,6 @@ const Wave: React.FC<WaveProps> = ({ onPlayNext, setIsPlaying }) => {
       wavesurfer.play();
     });
 
-    wavesurfer.on("finish", () => {
-      onPlayNext();
-    });
-
     wavesurfer.on("pause", () => {
       setIsPlaying(false);
     });
@@ -156,6 +152,12 @@ const Wave: React.FC<WaveProps> = ({ onPlayNext, setIsPlaying }) => {
       setIsLoading(true);
     }
   }, [player.activeUrl, player.sound]);
+
+  useEffect(() => {
+    player.sound?.on("finish", () => {
+      onPlayNext();
+    });
+  }, [player.sound, onPlayNext]);
 
   return (
     <div

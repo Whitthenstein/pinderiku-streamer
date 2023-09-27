@@ -80,11 +80,10 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
     window.onkeyup = (event) => {
       if (event.code === "Space") {
         event.preventDefault();
-        player.sound?.playPause();
-        setIsPlaying(!isPlaying);
+        handlePlay();
       }
     };
-  }, [isPlaying, player.sound]);
+  }, [handlePlay]);
 
   return (
     <div className="flex items-center w-full flex-col h-full">
