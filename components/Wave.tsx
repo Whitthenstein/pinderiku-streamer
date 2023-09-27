@@ -165,10 +165,10 @@ const Wave: React.FC<WaveProps> = ({ onPlayNext, setIsPlaying }) => {
       className="w-full md:pr-16 lg:pr-48 h-full pt-5 relative items-center"
     >
       {
-        <progress
+        <div
           id="waveform-loader"
-          className="progress pointer-events-none select-none absolute z-10 top-1/3 pt-2 w-2/3 fade-animation"
-        ></progress>
+          className="bg-emerald-600 animate-ping fade-animation h-2 rounded pointer-events-none select-none absolute z-10 left-1/4 top-1/3 mt-3 w-24"
+        ></div>
       }
       <div
         id="waveform"
