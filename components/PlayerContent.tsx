@@ -13,6 +13,7 @@ import Slider from "./Slider";
 import Wave from "./Wave";
 import MediaItem from "./MediaItem";
 import LikeButton from "./LikeButton";
+import EQBars from "./EQBars";
 
 interface PlayerContentProps {
   song: Song;
@@ -201,7 +202,10 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
           "
           />
         </div>
-        <div className="w-full h-full flex items-center"></div>
+        {/* EQ Bars */}
+        <div className="hidden md:flex w-full h-full items-center">
+          <EQBars />
+        </div>
         <div className="hidden md:flex w-full justify-end pr-2">
           <div className="flex items-center gap-x-2 w-[120px]">
             <VolumeIcon

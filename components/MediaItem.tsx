@@ -22,7 +22,7 @@ const MediaItem: React.FC<MediaItemProps> = ({ data, onClick }) => {
       return onClick(data.song_path);
     }
 
-    player.setActiveUrl(data.song_path);
+    // player.setActiveUrl(data.song_path);
   };
 
   return (

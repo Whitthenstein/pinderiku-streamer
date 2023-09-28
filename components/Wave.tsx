@@ -5,6 +5,7 @@ import HoverPlugin from "wavesurfer.js/dist/plugins/hover.js";
 import usePlayer from "@/hooks/usePlayer";
 
 import { Song } from "@/types";
+import WaveformLoader from "./WaveformLoader";
 
 interface WaveProps {
   song: Song;
@@ -29,16 +30,18 @@ const Wave: React.FC<WaveProps> = ({ onPlayNext, setIsPlaying }) => {
     // // Define the waveform gradient
     const gradient = ctx!.createLinearGradient(0, 0, 0, 50);
     gradient.addColorStop(0, "#bbbbbb"); // Top color
-    gradient.addColorStop(0.6, "#777777"); // White line
+    gradient.addColorStop(0.6, "#777777");
     gradient.addColorStop(1, "#bbbbbb"); // Bottom color
 
     // Define the progress gradient
     const progressGradient = ctx!.createLinearGradient(0, 0, 0, 50);
     progressGradient.addColorStop(0, "#059669"); // Top color
-    progressGradient.addColorStop(0.6, "#065f46"); // White line
+    progressGradient.addColorStop(0.6, "#065f46");
     progressGradient.addColorStop(1, "#059669"); // Bottom color
+    const audioMedia = new Audio();
     const wavesurfer = WaveSurfer.create({
       container: "#waveform",
+      media: audioMedia,
       waveColor: gradient,
       progressColor: progressGradient,
       url: player.activeUrl!,
@@ -115,6 +118,7 @@ const Wave: React.FC<WaveProps> = ({ onPlayNext, setIsPlaying }) => {
     });
 
     player.setSound(wavesurfer);
+    player.setMedia(audioMedia);
 
     // add custom cursor animation to shadowDOM
     const host = waveform.children[3];
@@ -165,12 +169,7 @@ const Wave: React.FC<WaveProps> = ({ onPlayNext, setIsPlaying }) => {
       id="waveform-container"
       className="relative w-full h-full pt-5 items-center"
     >
-      <div className="absolute items-center justify-center w-1/2 right-1/4 h-full top-1/2">
-        <div
-          id="waveform-loader"
-          className=" bg-emerald-600 animate-ping fade-animation h-2 rounded pointer-events-none select-none"
-        />
-      </div>
+      <WaveformLoader id="waveform-loader" />
       <div
         id="waveform"
         className="cursor-pointer fade-animation fade"
@@ -187,7 +186,6 @@ const Wave: React.FC<WaveProps> = ({ onPlayNext, setIsPlaying }) => {
         >
           {!player.isLoading && songDuration}
         </div>
-
         <div id="hover"></div>
       </div>
     </div>
