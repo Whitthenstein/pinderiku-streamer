@@ -12,9 +12,9 @@ const useOnPlay = (songs: Song[]) => {
   const publicSongsUrls = useLoadSongsUrls(songs);
 
   const onPlay = (url: string) => {
-    if (!user) {
-      return authModal.onOpen();
-    }
+    // if (!user) {
+    //   return authModal.onOpen();
+    // }
 
     const publicUrl = publicSongsUrls.find((publicUrlToTest) =>
       publicUrlToTest.includes(url)

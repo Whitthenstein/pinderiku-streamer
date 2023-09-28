@@ -12,7 +12,7 @@ const Player = () => {
   const songPath = player.activeUrl?.split("/").at(-1);
   const { song } = useGetSongBySongPath(songPath);
 
-  if (!song || !player.activeUrl || !player || !user) {
+  if (!song || !player.activeUrl || !player) {
     return null;
   }
 
@@ -22,7 +22,7 @@ const Player = () => {
         absolute
         bottom-0
         w-full
-        h-[80px]
+        h-[88px]
       "
     >
       <PlayerContent song={song} />
