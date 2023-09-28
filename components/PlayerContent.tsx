@@ -1,15 +1,15 @@
 "use client";
 
 import React, { useCallback, useEffect, useState } from "react";
-import { usePrevious } from "@uidotdev/usehooks";
-
 import { BsPauseFill, BsPlayFill } from "react-icons/bs";
 import { AiFillStepBackward, AiFillStepForward } from "react-icons/ai";
 import { HiSpeakerWave, HiSpeakerXMark } from "react-icons/hi2";
 
+import usePlayer from "@/hooks/usePlayer";
+import { usePrevious } from "@uidotdev/usehooks";
+
 import { Song } from "@/types";
 import Slider from "./Slider";
-import usePlayer from "@/hooks/usePlayer";
 import Wave from "./Wave";
 import MediaItem from "./MediaItem";
 import LikeButton from "./LikeButton";
@@ -27,6 +27,10 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
   const VolumeIcon = volume === 0 ? HiSpeakerXMark : HiSpeakerWave;
 
   const onPlayNext = () => {
+    if (player.isLoading) {
+      return;
+    }
+
     if (player.urls.length === 0) {
       return;
     }
@@ -40,6 +44,9 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
   };
 
   const onPlayPrevious = () => {
+    if (player.isLoading) {
+      return;
+    }
     if (player.urls.length === 0) {
       return;
     }
@@ -55,9 +62,13 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
   };
 
   const handlePlay = useCallback(async () => {
+    if (player.isLoading) {
+      return;
+    }
+
     player.sound?.playPause();
     setIsPlaying(!isPlaying);
-  }, [isPlaying, player.sound]);
+  }, [isPlaying, player.sound, player.isLoading]);
 
   const toggleMute = () => {
     const isMuted = player.sound?.getMuted();
@@ -87,7 +98,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
 
   return (
     <div className="flex items-center w-full flex-col h-full">
-      <div className="grid grid-cols-2 md:grid-cols-3 h-full w-full px-4">
+      <div className="grid grid-cols-2 md:grid-cols-5 h-full w-full px-4">
         <div
           className="
         flex
@@ -129,6 +140,14 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
               className="text-black"
             />
           </div>
+        </div>
+        <div className="hidden md:flex items-center gap-x-4">
+          <Wave
+            song={song}
+            onPlayNext={onPlayNext}
+            onPlayPrevious={onPlayPrevious}
+            setIsPlaying={setIsPlaying}
+          />
         </div>
         <div
           className="
@@ -182,13 +201,8 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
           "
           />
         </div>
+        <div className="w-full h-full flex items-center"></div>
         <div className="hidden md:flex w-full justify-end pr-2">
-          <Wave
-            song={song}
-            onPlayNext={onPlayNext}
-            onPlayPrevious={onPlayPrevious}
-            setIsPlaying={setIsPlaying}
-          />
           <div className="flex items-center gap-x-2 w-[120px]">
             <VolumeIcon
               onClick={toggleMute}

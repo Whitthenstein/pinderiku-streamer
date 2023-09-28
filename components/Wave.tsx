@@ -1,8 +1,10 @@
-import { Song } from "@/types";
 import React, { useEffect, useState } from "react";
 import WaveSurfer from "wavesurfer.js";
 import HoverPlugin from "wavesurfer.js/dist/plugins/hover.js";
+
 import usePlayer from "@/hooks/usePlayer";
+
+import { Song } from "@/types";
 
 interface WaveProps {
   song: Song;
@@ -13,7 +15,6 @@ interface WaveProps {
 
 const Wave: React.FC<WaveProps> = ({ onPlayNext, setIsPlaying }) => {
   const player = usePlayer();
-  const [isLoading, setIsLoading] = useState(true);
   const [waverformElement, setWaveformElement] = useState<HTMLElement | null>(
     null
   );
@@ -109,7 +110,7 @@ const Wave: React.FC<WaveProps> = ({ onPlayNext, setIsPlaying }) => {
     });
 
     wavesurfer.on("ready", () => {
-      setIsLoading(false);
+      player.setIsLoading(false);
       wavesurfer.setTime(0);
     });
 
@@ -135,7 +136,7 @@ const Wave: React.FC<WaveProps> = ({ onPlayNext, setIsPlaying }) => {
   }, []);
 
   useEffect(() => {
-    if (isLoading) {
+    if (player.isLoading) {
       waverformLoaderElement?.classList.toggle("fade");
       waverformElement?.classList.toggle("fade");
     } else {
@@ -143,14 +144,15 @@ const Wave: React.FC<WaveProps> = ({ onPlayNext, setIsPlaying }) => {
       waverformElement?.classList.toggle("fade");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading]);
+  }, [player.isLoading]);
 
   useEffect(() => {
     if (player.activeUrl) {
       player.sound?.load(player.activeUrl);
-      setIsLoading(true);
+      player.setIsLoading(true);
     }
-  }, [player.activeUrl, player.sound]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [player.activeUrl, player.sound, player.setIsLoading]);
 
   useEffect(() => {
     player.sound?.on("finish", () => {
@@ -161,29 +163,29 @@ const Wave: React.FC<WaveProps> = ({ onPlayNext, setIsPlaying }) => {
   return (
     <div
       id="waveform-container"
-      className="w-full md:pr-16 lg:pr-48 h-full pt-5 relative items-center"
+      className="relative w-full h-full pt-5 items-center"
     >
-      {
+      <div className="absolute items-center justify-center w-1/2 right-1/4 h-full top-1/2">
         <div
           id="waveform-loader"
-          className="bg-emerald-600 animate-ping fade-animation h-2 rounded pointer-events-none select-none absolute z-10 left-1/4 top-1/3 mt-3 w-24"
-        ></div>
-      }
+          className=" bg-emerald-600 animate-ping fade-animation h-2 rounded pointer-events-none select-none"
+        />
+      </div>
       <div
         id="waveform"
         className="cursor-pointer fade-animation fade"
       >
         <div
           id="time"
-          className="pointer-events-none select-none absolute z-10 top-1/2 mt--1 translate-y--1/2 text-[11px] bg-opacity-75 left-0 md:pr-16 lg:pr-48"
+          className="pointer-events-none select-none absolute z-10 top-1/2 mt--1 translate-y--1/2 text-[11px] bg-opacity-75 left-0"
         >
-          {!isLoading && "0:00"}
+          {!player.isLoading && "0:00"}
         </div>
         <div
           id="duration"
-          className="pointer-events-none select-none absolute z-10 top-1/2 mt--1 translate-y--1/2 text-[11px] bg-opacity-75 right-0 md:pr-16 lg:pr-48"
+          className="pointer-events-none select-none absolute z-10 top-1/2 mt--1 translate-y--1/2 text-[11px] bg-opacity-75 right-0"
         >
-          {!isLoading && songDuration}
+          {!player.isLoading && songDuration}
         </div>
 
         <div id="hover"></div>
