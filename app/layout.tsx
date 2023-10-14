@@ -1,4 +1,3 @@
-// import "./globals.css";
 import "../styles/globals.scss";
 import type { Metadata } from "next";
 import { Lato } from "next/font/google";
