@@ -58,7 +58,7 @@ export const Library: React.FC<LibraryProps> = ({ songs }) => {
             text-md
             "
           >
-            Your Library
+            Library
           </p>
         </div>
         {/* <AiOutlinePlus

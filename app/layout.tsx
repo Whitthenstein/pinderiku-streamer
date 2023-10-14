@@ -8,9 +8,9 @@ import SupabaseProvider from "@/providers/SupabaseProvider";
 import UserProvider from "@/providers/UserProvider";
 import ModalProvider from "@/providers/ModalProvider";
 import ToasterProvider from "@/providers/ToasterProvider";
-import getSongsByUserId from "@/actions/getSongsByUserId";
 import Player from "@/components/Player";
 import getActiveProductsWithPrices from "@/actions/getActiveProductsWithPrices";
+import getSongs from "@/actions/getSongs";
 
 const font = Lato({ weight: "400", subsets: ["latin"] });
 
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 export const revalidate = 0;
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
-  const userSongs = await getSongsByUserId();
+  const userSongs = await getSongs();
   const products = await getActiveProductsWithPrices();
 
   return (
