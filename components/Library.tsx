@@ -61,7 +61,7 @@ export const Library: React.FC<LibraryProps> = ({ songs }) => {
             Your Library
           </p>
         </div>
-        <AiOutlinePlus
+        {/* <AiOutlinePlus
           onClick={onClick}
           size={20}
           className="
@@ -70,7 +70,7 @@ export const Library: React.FC<LibraryProps> = ({ songs }) => {
           hover:text-white 
           transition
           "
-        />
+        /> */}
       </div>
       <div
         className="
