@@ -104,7 +104,7 @@ const EQBars = () => {
       <WaveformLoader id="eq-loader" />
       <div
         id="canvas-container"
-        className="fade-animation"
+        className="fade-animation fade"
       >
         <canvas
           id="eq-bars-1"
