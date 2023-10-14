@@ -8,7 +8,6 @@ import UserProvider from "@/providers/UserProvider";
 import ModalProvider from "@/providers/ModalProvider";
 import ToasterProvider from "@/providers/ToasterProvider";
 import Player from "@/components/Player";
-import getActiveProductsWithPrices from "@/actions/getActiveProductsWithPrices";
 import getSongs from "@/actions/getSongs";
 
 const font = Lato({ weight: "400", subsets: ["latin"] });
@@ -22,7 +21,6 @@ export const revalidate = 0;
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   const userSongs = await getSongs();
-  const products = await getActiveProductsWithPrices();
 
   return (
     <html lang="en">
@@ -36,7 +34,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
         <ToasterProvider />
         <SupabaseProvider>
           <UserProvider>
-            <ModalProvider products={products} />
+            <ModalProvider />
             <Sidebar songs={userSongs}>{children}</Sidebar>
             <Player />
           </UserProvider>
