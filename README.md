@@ -1,34 +1,57 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Pinderiku Streaming APP
 
-## Getting Started
+## Table of Contents
 
-First, run the development server:
+- [Pinderiku Streaming APP](#pinderiku-streaming-app)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+    - [Built With](#built-with)
+  - [Features](#features)
+  - [Contact](#contact)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Overview
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+[![Project Overview](/public/img/pinderiku-streamer-overview.jpg)](https://pinderiku.vercel.app/)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Live demo can be found [here](https://pinderiku.vercel.app/).
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+I made this project because I wanted to host the songs for my hobby musical project on an independent platform. While doing it I managed to improve my skills in Typescript, and TailwindCSS, since I was not familiarized with these as much as I was with the other technologies used.
 
-## Learn More
+There are a couple of little things that I was able to implement that were pretty cool:
 
-To learn more about Next.js, take a look at the following resources:
+- The Waveform.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+![Waveform](/public/img/waveform.gif)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+For this I used a package name [Wavesurfer.js](https://wavesurfer.xyz/), highly customized by myself for this project.
 
-## Deploy on Vercel
+- The Sound Frequency Bars.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+![Frequency Bars](/public/img/bars.gif)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+For these I used two animated HTML canvas, mirrored vertically, to show the frequencies of the playing song.
+
+<!-- TODO:
+    1. Describe my overall experience in a couple of sentences.
+    2. List a few specific technical things that I learned or improved on.
+    3. Share any other tips or guidance for others attempting this or something similar.
+ -->
+
+### Built With
+
+[![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)](https://react.dev/)
+[![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![SASS](https://img.shields.io/badge/SASS-hotpink.svg?style=for-the-badge&logo=SASS&logoColor=white)](https://sass-lang.com/)
+[![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/)
+
+## Features
+
+At the moment the application only supports streaming of songs for one artist. Although it has support to sign in and register, these only allow the logged in user to like songs. I intend on expanding the app with more functionalities in the future, like the creation of playlists of each user.
+
+## Contact
+
+[![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/joao-m-branco/)
+
+<!-- TODO: Include icons and links to your RELEVANT, PROFESSIONAL 'DEV-ORIENTED' social media. LinkedIn and dev.to are minimum. -->
