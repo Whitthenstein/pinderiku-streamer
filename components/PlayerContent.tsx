@@ -90,15 +90,6 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
     player.sound?.setVolume(value);
   };
 
-  useEffect(() => {
-    window.onkeyup = (event) => {
-      if (event.code === "Space") {
-        event.preventDefault();
-        handlePlay();
-      }
-    };
-  }, [handlePlay]);
-
   return (
     <div className="flex items-center w-full flex-col h-full">
       <div className="grid grid-cols-2 md:grid-cols-5 h-full w-full px-4">
