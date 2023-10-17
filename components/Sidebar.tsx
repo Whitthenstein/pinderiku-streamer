@@ -1,8 +1,9 @@
 "use client";
 
+import { useMemo } from "react";
 import { usePathname } from "next/navigation";
 import { twMerge } from "tailwind-merge";
-import { useMemo } from "react";
+
 import { BiSearch } from "react-icons/bi";
 import { HiHome } from "react-icons/hi";
 
@@ -10,6 +11,7 @@ import usePlayer from "@/hooks/usePlayer";
 import { useUser } from "@/hooks/useUser";
 
 import { Song } from "@/types";
+
 import Box from "./Box";
 import { Library } from "./Library";
 import { SidebarItem } from "./SidebarItem";

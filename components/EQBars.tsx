@@ -1,5 +1,7 @@
-import usePlayer from "@/hooks/usePlayer";
 import { useEffect, useState } from "react";
+
+import usePlayer from "@/hooks/usePlayer";
+
 import WaveformLoader from "./WaveformLoader";
 
 const EQBars = () => {

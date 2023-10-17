@@ -3,9 +3,9 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-import { useUser } from "@/hooks/useUser";
-
 import WorkInProgress from "@/components/work-in-progress";
+
+import { useUser } from "@/hooks/useUser";
 
 const AccountContent = () => {
   const router = useRouter();

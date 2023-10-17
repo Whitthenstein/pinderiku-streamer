@@ -1,14 +1,17 @@
-import "../styles/globals.scss";
 import type { Metadata } from "next";
 import { Lato } from "next/font/google";
 
-import Sidebar from "@/components/Sidebar";
-import SupabaseProvider from "@/providers/SupabaseProvider";
-import UserProvider from "@/providers/UserProvider";
-import ModalProvider from "@/providers/ModalProvider";
-import ToasterProvider from "@/providers/ToasterProvider";
-import Player from "@/components/Player";
 import getSongs from "@/actions/getSongs";
+
+import Sidebar from "@/components/Sidebar";
+import Player from "@/components/Player";
+
+import ToasterProvider from "@/providers/ToasterProvider";
+import ModalProvider from "@/providers/ModalProvider";
+import UserProvider from "@/providers/UserProvider";
+import SupabaseProvider from "@/providers/SupabaseProvider";
+
+import "@/styles/globals.scss";
 
 const font = Lato({ weight: "400", subsets: ["latin"] });
 

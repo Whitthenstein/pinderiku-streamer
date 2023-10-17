@@ -1,7 +1,7 @@
-import usePlayer from "./usePlayer";
-import useAuthModal from "./useAuthModal";
-import useLoadSongsUrls from "./useLoadSongsUrls";
-import { useUser } from "./useUser";
+import useAuthModal from "@/hooks/useAuthModal";
+import useLoadSongsUrls from "@/hooks/useLoadSongsUrls";
+import { useUser } from "@/hooks/useUser";
+import usePlayer from "@/hooks/usePlayer";
 
 import { Song } from "@/types";
 
