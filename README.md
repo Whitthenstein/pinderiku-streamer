@@ -50,6 +50,8 @@ For these I used two animated HTML canvas, mirrored vertically, to show the freq
 
 At the moment the application only supports streaming of songs for one artist. Although it has support to sign in and register, these only allow the logged in user to like songs. I intend on expanding the app with more functionalities in the future, like the creation of playlists of each user.
 
+You can check what I'm currently working on for this project on [this Github project page](https://github.com/users/Whitthenstein/projects/5).
+
 ## Contact
 
 [![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/joao-m-branco/)
