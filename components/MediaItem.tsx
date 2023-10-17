@@ -7,6 +7,13 @@ import usePlayer from "@/hooks/usePlayer";
 
 import { Song } from "@/types";
 
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
 interface MediaItemProps {
   data: Song;
   onClick?: (id: string) => void;
@@ -21,8 +28,6 @@ const MediaItem: React.FC<MediaItemProps> = ({ data, onClick }) => {
       player.setShowPlayer(true);
       return onClick(data.song_path);
     }
-
-    // player.setActiveUrl(data.song_path);
   };
 
   return (
@@ -65,7 +70,17 @@ const MediaItem: React.FC<MediaItemProps> = ({ data, onClick }) => {
         overflow-hidden
       "
       >
-        <p className="text-white truncate">{data.title}</p>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <p className="text-white truncate">{data.title}</p>
+            </TooltipTrigger>
+            <TooltipContent className="border-none text-white bg-neutral-900">
+              <p>{data.title}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
         <p
           className="
         text-neutral-400 text-sm truncate"

@@ -7,7 +7,14 @@ import usePlayer from "@/hooks/usePlayer";
 
 import { Song } from "@/types";
 
-import PlayButton from "./PlayButton";
+import PlayButton from "@/components/PlayButton";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
 interface SongItemProps {
   data: Song;
@@ -17,40 +24,16 @@ interface SongItemProps {
 const SongItem: React.FC<SongItemProps> = ({ data, onClick }) => {
   const player = usePlayer();
   const imagePath = useLoadImage(data);
+
   return (
-    <div
+    <Card
       onClick={() => {
         player.setShowPlayer(true);
         onClick(data.song_path);
       }}
-      className="
-    relative
-    group
-    flex
-    flex-col
-    items-center
-    justify-center
-    rounded-md
-    overflow-hidden
-    gap-x-4
-    bg-neutral-400/5
-    cursor-pointer
-    hover:bg-neutral-400/10
-    transition
-    p-3
-    cena
-    "
+      className="group flex flex-col items-center justify-center h-fit w-full p-3 overflow-hidden gap-x-4 bg-neutral-400/5 cursor-pointer hover:bg-neutral-400/10 transition border-none"
     >
-      <div
-        className="
-            relative
-            aspect-square
-            w-full
-            h-full
-            rounded-md
-            overflow-hidden
-        "
-      >
+      <CardContent className="relative aspect-square w-full h-full rounded-lg overflow-hidden">
         <Image
           className="object-cover"
           src={imagePath || "/img/liked.png"}
@@ -58,39 +41,26 @@ const SongItem: React.FC<SongItemProps> = ({ data, onClick }) => {
           sizes="w-full"
           alt="Image"
         ></Image>
-      </div>
-      <div
-        className="
-        flex
-        flex-col
-        items-start
-        w-full
-        pt-4
-        gap-y-1
-      "
-      >
-        <p className="font-semibold truncate w-full">{data.title}</p>
-        <p
-          className="
-            text-neutral-400
-            text-sm
-            w-full
-            truncate
-        "
-        >
+        <div className="absolute bottom-2 right-2">
+          <PlayButton />
+        </div>
+      </CardContent>
+      <CardFooter className="flex flex-col items-start w-full truncate p-0 pb-1 pt-3 gap-1">
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger className="flex w-full p-0">
+              <p className="font-semibold text-white truncate">{data.title}</p>
+            </TooltipTrigger>
+            <TooltipContent className="text-white bg-neutral-900 border-none">
+              <p>{data.title}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+        <p className="text-neutral-400 text-sm w-full truncate p-0">
           By {data.author}
         </p>
-      </div>
-      <div
-        className="
-        absolute
-        bottom-24
-        right-5
-      "
-      >
-        <PlayButton />
-      </div>
-    </div>
+      </CardFooter>
+    </Card>
   );
 };
 
