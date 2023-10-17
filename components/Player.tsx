@@ -2,13 +2,11 @@
 
 import useGetSongBySongPath from "@/hooks/useGetSongBySongPath";
 import usePlayer from "@/hooks/usePlayer";
-import { useUser } from "@/hooks/useUser";
 
 import PlayerContent from "./PlayerContent";
 
 const Player = () => {
   const player = usePlayer();
-  const { user } = useUser();
   const songPath = player.activeUrl?.split("/").at(-1);
   const { song } = useGetSongBySongPath(songPath);
 
