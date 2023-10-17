@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import WaveSurfer from "wavesurfer.js";
 import HoverPlugin from "wavesurfer.js/dist/plugins/hover.js";
 
 import usePlayer from "@/hooks/usePlayer";
 
 import { Song } from "@/types";
+
 import WaveformLoader from "./WaveformLoader";
 
 interface WaveProps {

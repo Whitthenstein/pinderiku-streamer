@@ -1,7 +1,6 @@
 "use client";
 
 import * as RadixSlider from "@radix-ui/react-slider";
-import React from "react";
 
 interface SliderProps {
   value?: number;

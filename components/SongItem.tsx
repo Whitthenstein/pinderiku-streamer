@@ -3,10 +3,11 @@
 import Image from "next/image";
 
 import useLoadImage from "@/hooks/useLoadImage";
-import { Song } from "@/types";
-import React from "react";
-import PlayButton from "./PlayButton";
 import usePlayer from "@/hooks/usePlayer";
+
+import { Song } from "@/types";
+
+import PlayButton from "./PlayButton";
 
 interface SongItemProps {
   data: Song;

@@ -1,19 +1,21 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { usePrevious } from "@uidotdev/usehooks";
+
 import { BsPauseFill, BsPlayFill } from "react-icons/bs";
 import { AiFillStepBackward, AiFillStepForward } from "react-icons/ai";
 import { HiSpeakerWave, HiSpeakerXMark } from "react-icons/hi2";
 
 import usePlayer from "@/hooks/usePlayer";
-import { usePrevious } from "@uidotdev/usehooks";
 
 import { Song } from "@/types";
-import Slider from "./Slider";
+
 import Wave from "./Wave";
 import MediaItem from "./MediaItem";
 import LikeButton from "./LikeButton";
 import EQBars from "./EQBars";
+import Slider from "./Slider";
 
 interface PlayerContentProps {
   song: Song;
