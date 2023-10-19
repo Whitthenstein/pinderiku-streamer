@@ -13,7 +13,7 @@
 
 [![Project Overview](/public/img/pinderiku-streamer-overview.jpg)](https://pinderiku.vercel.app/)
 
-Live demo can be found [here](https://pinderiku.vercel.app/).
+*Live demo can be found [here](https://pinderiku.vercel.app/).*
 
 I made this project because I wanted to host the songs for my hobby musical project on an independent platform. While doing it I managed to improve my skills in Typescript, and TailwindCSS, since I was not familiarized with these as much as I was with the other technologies used.
 
@@ -55,5 +55,7 @@ You can check what I'm currently working on for this project on [this Github pro
 ## Contact
 
 [![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/joao-m-branco/)
+
+[My Portfolio Website](https://whitthenstein.vercel.app/)
 
 <!-- TODO: Include icons and links to your RELEVANT, PROFESSIONAL 'DEV-ORIENTED' social media. LinkedIn and dev.to are minimum. -->
