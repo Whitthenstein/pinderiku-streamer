@@ -32,6 +32,7 @@ const SongItem: React.FC<SongItemProps> = ({ data, onClick }) => {
         onClick(data.song_path);
       }}
       className="group flex flex-col items-center justify-center h-fit w-full p-3 overflow-hidden gap-x-4 bg-neutral-400/5 cursor-pointer hover:bg-neutral-400/10 transition border-none"
+      data-testid="song-card"
     >
       <CardContent className="relative aspect-square w-full h-full rounded-lg overflow-hidden">
         <Image
