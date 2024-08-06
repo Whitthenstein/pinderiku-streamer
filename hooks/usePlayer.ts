@@ -6,14 +6,14 @@ interface PlayerStore {
   media: HTMLAudioElement | null;
   showPlayer: boolean;
   urls: string[];
-  activeUrl: string | null;
+  activeUrl: string | undefined;
   currentIndex: number;
   isLoading: boolean;
   setSound: (newSound: WaveSurfer) => void;
   setMedia: (newMedia: HTMLAudioElement) => void;
   setShowPlayer: (value: boolean) => void;
   setUrls: (urls: string[]) => void;
-  setActiveUrl: (url: string | null) => void;
+  setActiveUrl: (url: string | undefined) => void;
   setIsLoading: (value: boolean) => void;
 }
 
@@ -21,7 +21,7 @@ const usePlayer = create<PlayerStore>((set) => ({
   sound: null,
   media: null,
   showPlayer: false,
-  activeUrl: null,
+  activeUrl: undefined,
   urls: [],
   currentIndex: 0,
   isLoading: true,
@@ -29,7 +29,7 @@ const usePlayer = create<PlayerStore>((set) => ({
   setMedia: (newMedia: HTMLAudioElement) => set({ media: newMedia }),
   setShowPlayer: (value: boolean) => set({ showPlayer: value }),
   setUrls: (newUrls: string[]) => set({ urls: newUrls }),
-  setActiveUrl: (url: string | null) => set({ activeUrl: url }),
+  setActiveUrl: (url: string | undefined) => set({ activeUrl: url }),
   setCurrentIndex: (index: number) => set({ currentIndex: index }),
   setIsLoading: (value: boolean) => set({ isLoading: value }),
 }));

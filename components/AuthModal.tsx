@@ -17,7 +17,7 @@ const AuthModal = () => {
   const supabaseClient = useSupabaseClient();
   const router = useRouter();
   const { session } = useSessionContext();
-  const { onClose, isOpen } = useAuthModal();
+  const { onClose, isOpen, view } = useAuthModal();
 
   useEffect(() => {
     if (session) {
@@ -44,6 +44,7 @@ const AuthModal = () => {
         magicLink
         providers={["github", "google"]}
         supabaseClient={supabaseClient}
+        view={view}
         appearance={{
           theme: ThemeSupa,
           variables: {

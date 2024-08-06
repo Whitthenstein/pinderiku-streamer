@@ -1,14 +1,14 @@
-import useAuthModal from "@/hooks/useAuthModal";
+// import useAuthModal from "@/hooks/useAuthModal";
+// import { useUser } from "@/hooks/useUser";
 import useLoadSongsUrls from "@/hooks/useLoadSongsUrls";
-import { useUser } from "@/hooks/useUser";
 import usePlayer from "@/hooks/usePlayer";
 
 import { Song } from "@/types";
 
 const useOnPlay = (songs: Song[]) => {
   const player = usePlayer();
-  const authModal = useAuthModal();
-  const { user } = useUser();
+  // const authModal = useAuthModal();
+  // const { user } = useUser();
   const publicSongsUrls = useLoadSongsUrls(songs);
 
   const onPlay = (url: string) => {
@@ -20,7 +20,7 @@ const useOnPlay = (songs: Song[]) => {
       publicUrlToTest.includes(url)
     );
 
-    player.setActiveUrl(publicUrl ? publicUrl : null);
+    player.setActiveUrl(publicUrl ? publicUrl : undefined);
     player.setUrls(publicSongsUrls);
   };
 

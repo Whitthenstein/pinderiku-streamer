@@ -40,12 +40,13 @@ const Wave: React.FC<WaveProps> = ({ onPlayNext, setIsPlaying }) => {
     progressGradient.addColorStop(0.6, "#065f46");
     progressGradient.addColorStop(1, "#059669"); // Bottom color
     const audioMedia = new Audio();
+
     const wavesurfer = WaveSurfer.create({
       container: "#waveform",
       media: audioMedia,
       waveColor: gradient,
       progressColor: progressGradient,
-      url: player.activeUrl!,
+      url: undefined,
       height: 40,
       normalize: true,
       barWidth: 4,
@@ -86,6 +87,8 @@ const Wave: React.FC<WaveProps> = ({ onPlayNext, setIsPlaying }) => {
 
     wavesurfer.on("ready", () => {
       wavesurfer.play();
+      player.setIsLoading(false);
+      wavesurfer.setTime(0);
     });
 
     wavesurfer.on("pause", () => {
@@ -113,11 +116,6 @@ const Wave: React.FC<WaveProps> = ({ onPlayNext, setIsPlaying }) => {
       // }, 400);
     });
 
-    wavesurfer.on("ready", () => {
-      player.setIsLoading(false);
-      wavesurfer.setTime(0);
-    });
-
     player.setSound(wavesurfer);
     player.setMedia(audioMedia);
 
@@ -141,13 +139,9 @@ const Wave: React.FC<WaveProps> = ({ onPlayNext, setIsPlaying }) => {
   }, []);
 
   useEffect(() => {
-    if (player.isLoading) {
-      waverformLoaderElement?.classList.toggle("fade");
-      waverformElement?.classList.toggle("fade");
-    } else {
-      waverformLoaderElement?.classList.toggle("fade");
-      waverformElement?.classList.toggle("fade");
-    }
+  waverformLoaderElement?.classList.toggle("fade");
+  waverformElement?.classList.toggle("fade");
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [player.isLoading]);
 

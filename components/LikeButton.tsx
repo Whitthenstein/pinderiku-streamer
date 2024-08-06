@@ -50,8 +50,9 @@ const LikeButton: React.FC<LikeButtonProps> = ({ songId }) => {
   const Icon = isLiked ? AiFillHeart : AiOutlineHeart;
 
   const handleLike = async () => {
+    console.log("cena");
     if (!user) {
-      return authModal.onOpen();
+      return authModal.onOpen("sign_in");
     }
 
     if (isLiked) {
