@@ -65,7 +65,7 @@ const EQBars = () => {
     canvasCtxTwo!.clearRect(0, 0, WIDTH, HEIGHT);
 
     function draw() {
-      const drawVisual = requestAnimationFrame(draw);
+      requestAnimationFrame(draw);
 
       analyser.getByteFrequencyData(dataArray);
 
@@ -93,13 +93,8 @@ const EQBars = () => {
   }, [player.isLoading]);
 
   useEffect(() => {
-    if (player.isLoading) {
       eqLoaderElement?.classList.toggle("fade");
       canvasContainer?.classList.toggle("fade");
-    } else {
-      eqLoaderElement?.classList.toggle("fade");
-      canvasContainer?.classList.toggle("fade");
-    }
   }, [player.isLoading, eqLoaderElement, canvasContainer]);
 
   return (

@@ -14,6 +14,7 @@ interface PlayerStore {
   showPlayer: boolean;
   urls: string[];
   activeUrl: string | undefined;
+  activePeakData: number[][] | undefined;
   currentIndex: number;
   isLoading: boolean;
   repeat: number;
@@ -22,6 +23,7 @@ interface PlayerStore {
   setShowPlayer: (value: boolean) => void;
   setUrls: (urls: string[]) => void;
   setActiveUrl: (url: string | undefined) => void;
+  setActivePeakData: (peakData: number[][]) => void;
   setIsLoading: (value: boolean) => void;
   toggleRepeat: () => void;
 }
@@ -31,6 +33,7 @@ const usePlayer = create<PlayerStore>((set) => ({
   media: null,
   showPlayer: false,
   activeUrl: undefined,
+  activePeakData: undefined,
   urls: [],
   currentIndex: 0,
   isLoading: true,
@@ -40,6 +43,7 @@ const usePlayer = create<PlayerStore>((set) => ({
   setShowPlayer: (value: boolean) => set({ showPlayer: value }),
   setUrls: (newUrls: string[]) => set({ urls: newUrls }),
   setActiveUrl: (url: string | undefined) => set({ activeUrl: url }),
+  setActivePeakData: (peakData: number[][]) => set({activePeakData: peakData}),
   setCurrentIndex: (index: number) => set({ currentIndex: index }),
   setIsLoading: (value: boolean) => set({ isLoading: value }),
   toggleRepeat() {

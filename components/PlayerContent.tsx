@@ -80,6 +80,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
     const nextSong = player.urls[currentIndex + 1];
 
     player.setActiveUrl(nextSong ? nextSong : player.urls[0]);
+    player.setIsLoading(true);
   };
 
   const onPlayPrevious = () => {
@@ -98,6 +99,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
     player.setActiveUrl(
       previousSong ? previousSong : player.urls[player.urls.length - 1]
     );
+    player.setIsLoading(true);
   };
 
   const handlePlay = useCallback(async () => {
@@ -106,7 +108,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
     }
 
     player.sound?.playPause();
-  }, [player.sound, player.isLoading]);
+  }, [player]);
 
   const toggleMute = () => {
     const isMuted = player.sound?.getMuted();

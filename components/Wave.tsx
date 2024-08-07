@@ -40,6 +40,7 @@ const Wave: React.FC<WaveProps> = ({ onPlayNext, setIsPlaying }) => {
     progressGradient.addColorStop(0.6, "#065f46");
     progressGradient.addColorStop(1, "#059669"); // Bottom color
     const audioMedia = new Audio();
+    audioMedia.crossOrigin = "anonymous"; //necessary to capture stream while it's loading
 
     const wavesurfer = WaveSurfer.create({
       container: "#waveform",
@@ -47,6 +48,7 @@ const Wave: React.FC<WaveProps> = ({ onPlayNext, setIsPlaying }) => {
       waveColor: gradient,
       progressColor: progressGradient,
       url: undefined,
+      autoplay: false,
       height: 40,
       normalize: true,
       barWidth: 4,
@@ -86,7 +88,7 @@ const Wave: React.FC<WaveProps> = ({ onPlayNext, setIsPlaying }) => {
     });
 
     wavesurfer.on("ready", () => {
-      wavesurfer.play();
+      wavesurfer.playPause();
       player.setIsLoading(false);
       wavesurfer.setTime(0);
     });
@@ -108,30 +110,23 @@ const Wave: React.FC<WaveProps> = ({ onPlayNext, setIsPlaying }) => {
       (currentTime) => (timeEl!.textContent = formatTime(currentTime))
     );
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    wavesurfer.on("loading", (percent) => {
-      // set percentage for progress loading bar
-      // setTimeout(() => {
-      //   waveformLoader.value = percent;
-      // }, 400);
-    });
     wavesurfer.on("finish", () => {
-      switch (player.repeat) {
-        case REPEAT_VALUES.NO_REPEAT:
-          console.log("no repeat", onPlayNext)
-          player.setIsLoading(false);
-          onPlayNext();
-          break;
-        case REPEAT_VALUES.REPEAT_ALL:
-          console.log("all")
-          onPlayNext();
-          break;
-        case REPEAT_VALUES.REPEAT_CURRENT:
-          console.log("current")
-          wavesurfer.setTime(0);
-          player.setIsLoading(false);
-          break;
-      }
+      // switch (player.repeat) {
+      //   case REPEAT_VALUES.NO_REPEAT:
+      //     console.log("no repeat", onPlayNext)
+      //     player.setIsLoading(false);
+      //     onPlayNext();
+      //     break;
+      //   case REPEAT_VALUES.REPEAT_ALL:
+      //     console.log("all")
+      //     onPlayNext();
+      //     break;
+      //   case REPEAT_VALUES.REPEAT_CURRENT:
+      //     console.log("current")
+      //     wavesurfer.setTime(0);
+      //     player.setIsLoading(false);
+      //     break;
+      // }
     });
 
     player.setSound(wavesurfer);
@@ -165,8 +160,7 @@ const Wave: React.FC<WaveProps> = ({ onPlayNext, setIsPlaying }) => {
 
   useEffect(() => {
     if (player.activeUrl) {
-      player.sound?.load(player.activeUrl);
-      player.setIsLoading(true);
+      player.sound?.load(player.activeUrl, player.activePeakData);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [player.activeUrl, player.sound, player.setIsLoading]);

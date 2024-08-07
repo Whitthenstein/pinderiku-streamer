@@ -17,7 +17,7 @@ const getSongs = async (): Promise<Song[]> => {
     console.log("[GET_SONGS]: ", error);
   }
 
-  return (data as any) || [];
+  return data || [];
 };
 
 export default getSongs;
