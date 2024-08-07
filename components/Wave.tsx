@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import WaveSurfer from "wavesurfer.js";
 import HoverPlugin from "wavesurfer.js/dist/plugins/hover.js";
 
-import usePlayer from "@/hooks/usePlayer";
+import usePlayer, { REPEAT_VALUES } from "@/hooks/usePlayer";
 
 import { Song } from "@/types";
 
@@ -114,6 +114,24 @@ const Wave: React.FC<WaveProps> = ({ onPlayNext, setIsPlaying }) => {
       // setTimeout(() => {
       //   waveformLoader.value = percent;
       // }, 400);
+    });
+    wavesurfer.on("finish", () => {
+      switch (player.repeat) {
+        case REPEAT_VALUES.NO_REPEAT:
+          console.log("no repeat", onPlayNext)
+          player.setIsLoading(false);
+          onPlayNext();
+          break;
+        case REPEAT_VALUES.REPEAT_ALL:
+          console.log("all")
+          onPlayNext();
+          break;
+        case REPEAT_VALUES.REPEAT_CURRENT:
+          console.log("current")
+          wavesurfer.setTime(0);
+          player.setIsLoading(false);
+          break;
+      }
     });
 
     player.setSound(wavesurfer);

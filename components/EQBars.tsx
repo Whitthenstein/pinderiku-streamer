@@ -89,7 +89,8 @@ const EQBars = () => {
     }
 
     draw();
-  }, [player]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [player.isLoading]);
 
   useEffect(() => {
     if (player.isLoading) {

@@ -1,13 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { usePrevious } from "@uidotdev/usehooks";
 
 import { BsPauseFill, BsPlayFill } from "react-icons/bs";
 import { AiFillStepBackward, AiFillStepForward } from "react-icons/ai";
-import { HiSpeakerWave, HiSpeakerXMark } from "react-icons/hi2";
+import { LuVolume, LuVolume1, LuVolume2, LuVolumeX, LuRepeat, LuRepeat1 } from "react-icons/lu";
 
-import usePlayer from "@/hooks/usePlayer";
+import usePlayer, { REPEAT_VALUES} from "@/hooks/usePlayer";
 
 import { Song } from "@/types";
 
@@ -21,13 +21,49 @@ interface PlayerContentProps {
   song: Song;
 }
 
+const getRepeatIcon = (repeatValue: number, toggleRepeat: () => void) => {
+  switch (repeatValue) {
+    case REPEAT_VALUES.NO_REPEAT:
+      return <LuRepeat 
+      onClick={toggleRepeat}
+      size={34}
+      className="cursor-pointer opacity-50"/>
+    case REPEAT_VALUES.REPEAT_ALL:
+      return <LuRepeat 
+      onClick={toggleRepeat}
+      size={34}
+      className="cursor-pointer"/>;
+    case REPEAT_VALUES.REPEAT_CURRENT:
+      return <LuRepeat1
+      onClick={toggleRepeat}
+      size={34}
+      className="cursor-pointer"/>;
+  }
+}
+
+const getVolumeIcon = (volume: number) => {
+  if (volume === 0) {
+    return LuVolumeX;
+  }
+
+  if (volume <= 0.33) {
+    return LuVolume;
+  }
+
+  if (volume <= 0.66) {
+    return LuVolume1;
+  } 
+
+  return LuVolume2;
+};
+
 const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
   const player = usePlayer();
   const [volume, setVolume] = useState(1);
   const previousVolume = usePrevious(volume);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(player.sound?.isPlaying());
   const Icon = isPlaying ? BsPauseFill : BsPlayFill;
-  const VolumeIcon = volume === 0 ? HiSpeakerXMark : HiSpeakerWave;
+  const VolumeIcon = getVolumeIcon(volume);
 
   const onPlayNext = () => {
     if (player.isLoading) {
@@ -70,8 +106,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
     }
 
     player.sound?.playPause();
-    setIsPlaying(!isPlaying);
-  }, [isPlaying, player.sound, player.isLoading]);
+  }, [player.sound, player.isLoading]);
 
   const toggleMute = () => {
     const isMuted = player.sound?.getMuted();
@@ -88,6 +123,10 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
   const handleSetVolume = (value: number) => {
     setVolume(value);
     player.sound?.setVolume(value);
+  };
+
+  const toggleRepeat = () => {
+    player.toggleRepeat()
   };
 
   return (
@@ -201,6 +240,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
         </div>
         <div className="hidden md:flex w-full justify-end pr-2">
           <div className="flex items-center gap-x-2 w-[120px]">
+          {/* {getRepeatIcon(player.repeat, toggleRepeat)} */}
             <VolumeIcon
               onClick={toggleMute}
               size={34}
