@@ -8,7 +8,6 @@ import { BiSearch } from "react-icons/bi";
 import { HiHome } from "react-icons/hi";
 
 import usePlayer from "@/hooks/usePlayer";
-import { useUser } from "@/hooks/useUser";
 
 import { Song } from "@/types";
 
@@ -22,7 +21,6 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ children, songs }) => {
   const player = usePlayer();
-  const { user } = useUser();
   const pathname = usePathname();
   const routes = useMemo(
     () => [

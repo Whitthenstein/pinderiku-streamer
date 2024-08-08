@@ -65,6 +65,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
   const Icon = isPlaying ? BsPauseFill : BsPlayFill;
   const VolumeIcon = getVolumeIcon(volume);
 
+  // TODO: fix change activeSong on play next and previous to fix media item in player not changing image
   const onPlayNext = () => {
     if (player.isLoading) {
       return;
