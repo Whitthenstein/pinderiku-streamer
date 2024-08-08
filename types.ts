@@ -1,5 +1,3 @@
-import { Json } from "./types_db";
-
 export interface Song {
   id: string;
   user_id: string;
