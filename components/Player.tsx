@@ -1,16 +1,13 @@
 "use client";
 
-import useGetSongBySongPath from "@/hooks/useGetSongBySongPath";
 import usePlayer from "@/hooks/usePlayer";
 
 import PlayerContent from "./PlayerContent";
 
 const Player = () => {
-  const player = usePlayer();
-  const songPath = player.activeUrl?.split("/").at(-1);
-  const { song } = useGetSongBySongPath(songPath);
+  const {activeSong} = usePlayer();
 
-  if (!song || !player.activeUrl || !player) {
+  if (!activeSong) {
     return null;
   }
 
@@ -23,7 +20,7 @@ const Player = () => {
         h-[88px]
       "
     >
-      <PlayerContent song={song} />
+      <PlayerContent song={activeSong} />
     </div>
   );
 };

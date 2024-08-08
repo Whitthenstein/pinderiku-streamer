@@ -7,28 +7,19 @@ import { Song } from "@/types";
 
 const useOnPlay = (songs: Song[]) => {
   const player = usePlayer();
-  // const authModal = useAuthModal();
-  // const { user } = useUser();
-  const publicSongsUrls = useLoadSongsUrls(songs);
+  const urls = useLoadSongsUrls(songs);
 
   const onPlay = (songPath: string) => {
-    // if (!user) {
-    //   return authModal.onOpen();
-    // }
-
-    const publicUrl = publicSongsUrls.find((publicUrlToTest) =>
-      publicUrlToTest.includes(songPath)
-    );
-
+    const publicUrl = urls.find(url => url.includes(songPath));
     const song = songs.find(song => song.song_path === songPath);
 
-    if (publicUrl && song) {
-      if (publicUrl !== player.activeUrl) {
+    if (song) {
+      if (player.activeSong?.song_path !== songPath) {
         player.setIsLoading(true);
       }
-      player.setActiveUrl(publicUrl ? publicUrl : undefined);
-      player.setUrls(publicSongsUrls);
-      player.setActivePeakData(song.peak_data);
+      player.setActiveSong(song);
+      player.setActiveUrl(publicUrl);
+      player.setUrls(urls);
     }
   };
 

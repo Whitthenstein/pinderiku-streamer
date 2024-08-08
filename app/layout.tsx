@@ -11,6 +11,8 @@ import ModalProvider from "@/providers/ModalProvider";
 import UserProvider from "@/providers/UserProvider";
 import SupabaseProvider from "@/providers/SupabaseProvider";
 
+import useLoadSongsUrls from "@/hooks/useLoadSongUrl";
+
 import "@/styles/globals.scss";
 
 const font = Lato({ weight: "400", subsets: ["latin"] });

@@ -1,9 +1,9 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 import useLoadImage from "@/hooks/useLoadImage";
-import usePlayer from "@/hooks/usePlayer";
 
 import { Song } from "@/types";
 
@@ -20,13 +20,15 @@ interface MediaItemProps {
 }
 
 const MediaItem: React.FC<MediaItemProps> = ({ data, onClick }) => {
+  const router = useRouter();
+
   const imageUrl = useLoadImage(data);
-  const player = usePlayer();
 
   const handleClick = () => {
+    router.replace(`/song/${data.id}`)
+
     if (onClick) {
-      player.setShowPlayer(true);
-      return onClick(data.song_path);
+      onClick(data.song_path);
     }
   };
 

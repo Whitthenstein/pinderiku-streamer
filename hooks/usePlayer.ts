@@ -1,3 +1,4 @@
+import { Song } from "@/types";
 import WaveSurfer from "wavesurfer.js";
 import { create } from "zustand";
 
@@ -11,8 +12,8 @@ export const enum REPEAT_VALUES {
 interface PlayerStore {
   sound: WaveSurfer | null;
   media: HTMLAudioElement | null;
-  showPlayer: boolean;
   urls: string[];
+  activeSong: Song | undefined;
   activeUrl: string | undefined;
   activePeakData: number[][] | undefined;
   currentIndex: number;
@@ -20,8 +21,8 @@ interface PlayerStore {
   repeat: number;
   setSound: (newSound: WaveSurfer) => void;
   setMedia: (newMedia: HTMLAudioElement) => void;
-  setShowPlayer: (value: boolean) => void;
   setUrls: (urls: string[]) => void;
+  setActiveSong: (song: Song) => void;
   setActiveUrl: (url: string | undefined) => void;
   setActivePeakData: (peakData: number[][]) => void;
   setIsLoading: (value: boolean) => void;
@@ -31,7 +32,7 @@ interface PlayerStore {
 const usePlayer = create<PlayerStore>((set) => ({
   sound: null,
   media: null,
-  showPlayer: false,
+  activeSong: undefined,
   activeUrl: undefined,
   activePeakData: undefined,
   urls: [],
@@ -40,9 +41,12 @@ const usePlayer = create<PlayerStore>((set) => ({
   repeat: REPEAT_VALUES.NO_REPEAT,
   setSound: (wave: WaveSurfer) => set({ sound: wave }),
   setMedia: (newMedia: HTMLAudioElement) => set({ media: newMedia }),
-  setShowPlayer: (value: boolean) => set({ showPlayer: value }),
   setUrls: (newUrls: string[]) => set({ urls: newUrls }),
   setActiveUrl: (url: string | undefined) => set({ activeUrl: url }),
+  setActiveSong(song: Song) {
+    this.setActivePeakData(song.peak_data);
+    set({activeSong: song});
+  },
   setActivePeakData: (peakData: number[][]) => set({activePeakData: peakData}),
   setCurrentIndex: (index: number) => set({ currentIndex: index }),
   setIsLoading: (value: boolean) => set({ isLoading: value }),
