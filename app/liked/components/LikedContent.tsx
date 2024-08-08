@@ -50,7 +50,7 @@ const LikedContent: React.FC<LikedContentProps> = ({ songs }) => {
         flex-col
         gap-y-2
         w-full p-6
-    "
+      "
     >
       {songs.map((song) => (
         <div

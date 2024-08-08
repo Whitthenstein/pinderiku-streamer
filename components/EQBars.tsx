@@ -18,7 +18,7 @@ const EQBars = () => {
 
     const canvasElements = [
       document.getElementById("eq-bars-1"),
-      document.getElementById("eq-bars-2"),
+      document.getElementById("eq-bars-2")
     ];
 
     if (!canvasElements[0] || !canvasElements[1]) {
@@ -89,12 +89,12 @@ const EQBars = () => {
     }
 
     draw();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [player.isLoading]);
 
   useEffect(() => {
-      eqLoaderElement?.classList.toggle("fade");
-      canvasContainer?.classList.toggle("fade");
+    eqLoaderElement?.classList.toggle("fade");
+    canvasContainer?.classList.toggle("fade");
   }, [player.isLoading, eqLoaderElement, canvasContainer]);
 
   return (

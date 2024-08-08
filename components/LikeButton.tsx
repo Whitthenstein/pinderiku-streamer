@@ -69,7 +69,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({ songId }) => {
     } else {
       const { error } = await supabaseClient.from("liked_songs").insert({
         song_id: songId,
-        user_id: user.id,
+        user_id: user.id
       });
 
       if (error) {
@@ -85,10 +85,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({ songId }) => {
 
   return (
     <button
-      className="
-        hover:opacity-75
-        transition
-        "
+      className="hover:opacity-75 transition"
       onClick={handleLike}
     >
       <Icon color={isLiked ? "#22c55e" : "white"}></Icon>

@@ -15,12 +15,12 @@ const SearchInput = () => {
 
   useEffect(() => {
     const query = {
-      title: debaouncedValue,
+      title: debaouncedValue
     };
 
     const url = qs.stringifyUrl({
       url: "/search",
-      query: query,
+      query: query
     });
 
     router.push(url);

@@ -61,9 +61,9 @@ const Wave: React.FC<WaveProps> = ({ onPlayNext, setIsPlaying }) => {
           lineWidth: 3,
           labelBackground: "#222",
           labelColor: "#fff",
-          labelSize: "11px",
-        }),
-      ],
+          labelSize: "11px"
+        })
+      ]
     });
 
     const formatTime = (seconds: number) => {
@@ -152,8 +152,8 @@ const Wave: React.FC<WaveProps> = ({ onPlayNext, setIsPlaying }) => {
   }, []);
 
   useEffect(() => {
-  waverformLoaderElement?.classList.toggle("fade");
-  waverformElement?.classList.toggle("fade");
+    waverformLoaderElement?.classList.toggle("fade");
+    waverformElement?.classList.toggle("fade");
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [player.isLoading]);

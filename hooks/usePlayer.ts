@@ -7,7 +7,7 @@ export const enum REPEAT_VALUES {
   REPEAT_ALL,
   REPEAT_CURRENT,
   __LENGTH
-};
+}
 
 interface PlayerStore {
   sound: WaveSurfer | null;
@@ -45,16 +45,17 @@ const usePlayer = create<PlayerStore>((set) => ({
   setActiveUrl: (url: string | undefined) => set({ activeUrl: url }),
   setActiveSong(song: Song) {
     this.setActivePeakData(song.peak_data);
-    set({activeSong: song});
+    set({ activeSong: song });
   },
-  setActivePeakData: (peakData: number[][]) => set({activePeakData: peakData}),
+  setActivePeakData: (peakData: number[][]) =>
+    set({ activePeakData: peakData }),
   setCurrentIndex: (index: number) => set({ currentIndex: index }),
   setIsLoading: (value: boolean) => set({ isLoading: value }),
   toggleRepeat() {
     if (this.repeat === REPEAT_VALUES.__LENGTH - 1) {
-      set({repeat: 0});
+      set({ repeat: 0 });
     } else {
-      set({repeat: this.repeat + 1})
+      set({ repeat: this.repeat + 1 });
     }
   }
 }));

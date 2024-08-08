@@ -11,7 +11,7 @@ import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
-  TooltipTrigger,
+  TooltipTrigger
 } from "@/components/ui/tooltip";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
@@ -26,7 +26,7 @@ const SongItem: React.FC<SongItemProps> = ({ data, onClick }) => {
   const imagePath = useLoadImage(data);
 
   const handleClick = () => {
-    router.replace(`/song/${data.id}`)
+    router.replace(`/song/${data.id}`);
 
     if (onClick) {
       onClick(data.song_path);

@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import {
   useSessionContext,
-  useSupabaseClient,
+  useSupabaseClient
 } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/navigation";
 import { Auth } from "@supabase/auth-ui-react";
@@ -51,10 +51,10 @@ const AuthModal = () => {
             default: {
               colors: {
                 brand: "#404040",
-                brandAccent: "#22c55e",
-              },
-            },
-          },
+                brandAccent: "#22c55e"
+              }
+            }
+          }
         }}
       />
     </Modal>

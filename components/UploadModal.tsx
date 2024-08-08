@@ -26,8 +26,8 @@ const UploadModal = () => {
       author: "",
       title: "",
       song: null,
-      image: null,
-    },
+      image: null
+    }
   });
 
   const onChange = (open: boolean) => {
@@ -56,7 +56,7 @@ const UploadModal = () => {
         .from("songs")
         .upload(`song-${values.title}-${uniqueId}`, songFile, {
           cacheControl: "3600",
-          upsert: false,
+          upsert: false
         });
 
       if (songError) {
@@ -71,7 +71,7 @@ const UploadModal = () => {
           .from("images")
           .upload(`image-${values.title}-${uniqueId}`, imageFile, {
             cacheControl: "3600",
-            upsert: false,
+            upsert: false
           });
 
       if (imageError) {
@@ -87,7 +87,7 @@ const UploadModal = () => {
           title: values.title,
           author: values.author,
           image_path: imageData.path,
-          song_path: songData.path,
+          song_path: songData.path
         });
 
       if (supabaseError) {

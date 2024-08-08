@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { User } from "@supabase/auth-helpers-nextjs";
 import {
   useSessionContext,
-  useUser as useSupaUser,
+  useUser as useSupaUser
 } from "@supabase/auth-helpers-react";
 
 import { UserDetails } from "@/types";
@@ -26,7 +26,7 @@ export const MyUserContextProvider = (props: Props) => {
   const {
     session,
     isLoading: isLoadingUser,
-    supabaseClient: supabase,
+    supabaseClient: supabase
   } = useSessionContext();
 
   const user = useSupaUser();
@@ -59,7 +59,7 @@ export const MyUserContextProvider = (props: Props) => {
     accessToken,
     user,
     userDetails,
-    isLoading: isLoadingUser || isLoadingData,
+    isLoading: isLoadingUser || isLoadingData
   };
 
   return (

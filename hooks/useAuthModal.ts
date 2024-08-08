@@ -13,7 +13,7 @@ const useAuthModal = create<AuthModalStore>((set) => ({
   isOpen: false,
   view: "sign_in",
   onOpen: (view = "sign_in") => set({ isOpen: true, view }),
-  onClose: () => set({ isOpen: false }),
+  onClose: () => set({ isOpen: false })
 }));
 
 export default useAuthModal;

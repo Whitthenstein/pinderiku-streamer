@@ -11,7 +11,7 @@ import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
-  TooltipTrigger,
+  TooltipTrigger
 } from "@/components/ui/tooltip";
 
 interface MediaItemProps {
@@ -25,7 +25,7 @@ const MediaItem: React.FC<MediaItemProps> = ({ data, onClick }) => {
   const imageUrl = useLoadImage(data);
 
   const handleClick = () => {
-    router.replace(`/song/${data.id}`)
+    router.replace(`/song/${data.id}`);
 
     if (onClick) {
       onClick(data.song_path);
@@ -48,12 +48,12 @@ const MediaItem: React.FC<MediaItemProps> = ({ data, onClick }) => {
     >
       <div
         className="
-            relative
-            rounded-md
-            min-hl
-            min-h-[48px]
-            min-w-[48px]
-            overflow-hidden
+          relative
+          rounded-md
+          min-hl
+          min-h-[48px]
+          min-w-[48px]
+          overflow-hidden
         "
       >
         <Image
@@ -64,14 +64,7 @@ const MediaItem: React.FC<MediaItemProps> = ({ data, onClick }) => {
           className="object-cover"
         />
       </div>
-      <div
-        className="
-        flex
-        flex-col
-        gap-y-1
-        overflow-hidden
-      "
-      >
+      <div className="flex flex-col gap-y-1 overflow-hidden">
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
@@ -83,12 +76,7 @@ const MediaItem: React.FC<MediaItemProps> = ({ data, onClick }) => {
           </Tooltip>
         </TooltipProvider>
 
-        <p
-          className="
-        text-neutral-400 text-sm truncate"
-        >
-          {data.author}
-        </p>
+        <p className="text-neutral-400 text-sm truncate">{data.author}</p>
       </div>
     </div>
   );

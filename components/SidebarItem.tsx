@@ -14,7 +14,7 @@ export const SidebarItem: React.FC<SidebarItemProps> = ({
   icon: Icon,
   label,
   active,
-  href,
+  href
 }) => {
   return (
     <Link

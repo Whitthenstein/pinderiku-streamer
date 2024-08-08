@@ -5,9 +5,16 @@ import { usePrevious } from "@uidotdev/usehooks";
 
 import { BsPauseFill, BsPlayFill } from "react-icons/bs";
 import { AiFillStepBackward, AiFillStepForward } from "react-icons/ai";
-import { LuVolume, LuVolume1, LuVolume2, LuVolumeX, LuRepeat, LuRepeat1 } from "react-icons/lu";
+import {
+  LuVolume,
+  LuVolume1,
+  LuVolume2,
+  LuVolumeX,
+  LuRepeat,
+  LuRepeat1
+} from "react-icons/lu";
 
-import usePlayer, { REPEAT_VALUES} from "@/hooks/usePlayer";
+import usePlayer, { REPEAT_VALUES } from "@/hooks/usePlayer";
 
 import { Song } from "@/types";
 
@@ -24,22 +31,31 @@ interface PlayerContentProps {
 const getRepeatIcon = (repeatValue: number, toggleRepeat: () => void) => {
   switch (repeatValue) {
     case REPEAT_VALUES.NO_REPEAT:
-      return <LuRepeat 
-      onClick={toggleRepeat}
-      size={34}
-      className="cursor-pointer opacity-50"/>
+      return (
+        <LuRepeat
+          onClick={toggleRepeat}
+          size={34}
+          className="cursor-pointer opacity-50"
+        />
+      );
     case REPEAT_VALUES.REPEAT_ALL:
-      return <LuRepeat 
-      onClick={toggleRepeat}
-      size={34}
-      className="cursor-pointer"/>;
+      return (
+        <LuRepeat
+          onClick={toggleRepeat}
+          size={34}
+          className="cursor-pointer"
+        />
+      );
     case REPEAT_VALUES.REPEAT_CURRENT:
-      return <LuRepeat1
-      onClick={toggleRepeat}
-      size={34}
-      className="cursor-pointer"/>;
+      return (
+        <LuRepeat1
+          onClick={toggleRepeat}
+          size={34}
+          className="cursor-pointer"
+        />
+      );
   }
-}
+};
 
 const getVolumeIcon = (volume: number) => {
   if (volume === 0) {
@@ -52,7 +68,7 @@ const getVolumeIcon = (volume: number) => {
 
   if (volume <= 0.66) {
     return LuVolume1;
-  } 
+  }
 
   return LuVolume2;
 };
@@ -129,7 +145,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
   };
 
   const toggleRepeat = () => {
-    player.toggleRepeat()
+    player.toggleRepeat();
   };
 
   return (
@@ -243,7 +259,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
         </div>
         <div className="hidden md:flex w-full justify-end pr-2">
           <div className="flex items-center gap-x-2 w-[120px]">
-          {/* {getRepeatIcon(player.repeat, toggleRepeat)} */}
+            {/* {getRepeatIcon(player.repeat, toggleRepeat)} */}
             <VolumeIcon
               onClick={toggleMute}
               size={34}

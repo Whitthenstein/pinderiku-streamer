@@ -17,7 +17,7 @@ const font = Lato({ weight: "400", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Pinderiku",
-  description: "Listen to all of Pinderiku's songs!",
+  description: "Listen to all of Pinderiku's songs!"
 };
 
 export const revalidate = 0;

@@ -10,8 +10,8 @@ const useOnPlay = (songs: Song[]) => {
   const urls = useLoadSongsUrls(songs);
 
   const onPlay = (songPath: string) => {
-    const publicUrl = urls.find(url => url.includes(songPath));
-    const song = songs.find(song => song.song_path === songPath);
+    const publicUrl = urls.find((url) => url.includes(songPath));
+    const song = songs.find((song) => song.song_path === songPath);
 
     if (song) {
       if (player.activeSong?.song_path !== songPath) {
