@@ -22,7 +22,7 @@ const useOnPlay = (songs: Song[]) => {
 
     const song = songs.find(song => song.song_path === songPath);
 
-    if (publicUrl) {
+    if (publicUrl && song) {
       if (publicUrl !== player.activeUrl) {
         player.setIsLoading(true);
       }

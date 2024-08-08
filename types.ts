@@ -1,3 +1,5 @@
+import { Json } from "./types_db";
+
 export interface Song {
   id: string;
   user_id: string;
@@ -5,6 +7,7 @@ export interface Song {
   title: string;
   song_path: string;
   image_path: string;
+  peak_data: number[][];
 }
 
 export interface Customer {
