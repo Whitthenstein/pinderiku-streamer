@@ -3,6 +3,7 @@
 import { useCallback, useState } from "react";
 import { usePrevious } from "@uidotdev/usehooks";
 
+import { ScaleLoader } from "react-spinners";
 import { BsPauseFill, BsPlayFill } from "react-icons/bs";
 import { AiFillStepBackward, AiFillStepForward } from "react-icons/ai";
 import {
@@ -167,10 +168,18 @@ const PlayerContent = () => {
             cursor-pointer
         "
           >
-            <Icon
-              size={30}
-              className="text-black"
-            />
+            {isLoading ? (
+              <ScaleLoader
+                height={20}
+                radius={5}
+                width={2}
+              />
+            ) : (
+              <Icon
+                size={30}
+                className="text-black"
+              />
+            )}
           </div>
         </div>
         <div className="hidden md:flex items-center gap-x-4">
@@ -212,10 +221,18 @@ const PlayerContent = () => {
             cursor-pointer
         "
           >
-            <Icon
-              size={30}
-              className="text-black"
-            />
+            {isLoading ? (
+              <ScaleLoader
+                height={20}
+                radius={5}
+                width={2}
+              />
+            ) : (
+              <Icon
+                size={30}
+                className="text-black"
+              />
+            )}
           </div>
           <AiFillStepForward
             onClick={handleNext}
