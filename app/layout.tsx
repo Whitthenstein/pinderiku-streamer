@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 export const revalidate = 0;
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
-  const userSongs = await getSongs();
+  const songs = await getSongs();
 
   return (
     <html lang="en">
@@ -38,7 +38,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
         <SupabaseProvider>
           <UserProvider>
             <ModalProvider />
-            <Sidebar songs={userSongs}>{children}</Sidebar>
+            <Sidebar songs={songs}>{children}</Sidebar>
             <Player />
           </UserProvider>
         </SupabaseProvider>

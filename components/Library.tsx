@@ -2,17 +2,31 @@
 
 import { TbPlaylist } from "react-icons/tb";
 
-import useOnPlay from "@/hooks/useOnPlay";
+import usePlay from "@/hooks/usePlay";
 
-import { Song } from "@/types";
+import { SongsMap } from "@/types";
 
 import MediaItem from "./MediaItem";
+import usePlayer from "@/hooks/usePlayer";
+import { useEffect } from "react";
+import AnimatedBorderContainer from "./AnimatedBorderContainer";
+import usePlaylist from "@/hooks/usePlaylist";
 interface LibraryProps {
-  songs: Song[];
+  songs: SongsMap;
 }
 
 export const Library: React.FC<LibraryProps> = ({ songs }) => {
-  const onPlay = useOnPlay(songs);
+  const { playSong } = usePlay();
+  const { getSongsArray, setSongs } = usePlayer((state) => state);
+  const { getCurrentSongId } = usePlaylist((state) => state);
+
+  const currentSongId = getCurrentSongId();
+  const songsArray = getSongsArray(songs);
+
+  useEffect(() => {
+    setSongs(songs);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="flex flex-col">
@@ -25,13 +39,17 @@ export const Library: React.FC<LibraryProps> = ({ songs }) => {
           <p className="text-neutral-400 font-medium text-md">Library</p>
         </div>
       </div>
-      <div className="flex flex-col gap-y-2 mt-4 px-3">
-        {songs.map((item) => (
-          <MediaItem
-            onClick={(url: string) => onPlay(url)}
-            key={item.id}
-            data={item}
-          />
+      <div className="flex flex-col gap-y-1 mt-4 px-3">
+        {songsArray.map((song) => (
+          <AnimatedBorderContainer
+            key={song.id}
+            shouldAnimate={currentSongId === song.id}
+          >
+            <MediaItem
+              onClick={(songId: string) => playSong(songId)}
+              song={song}
+            />
+          </AnimatedBorderContainer>
         ))}
       </div>
     </div>

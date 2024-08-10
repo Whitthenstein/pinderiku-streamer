@@ -20,3 +20,5 @@ export interface UserDetails {
   full_name?: string;
   avatar_url?: string;
 }
+
+export type SongsMap = Map<string, Song>;

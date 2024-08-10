@@ -7,12 +7,12 @@ import { Song } from "@/types";
 
 const getSongsByTitle = async (title: string): Promise<Song[]> => {
   const supabase = createServerComponentClient({
-    cookies: cookies,
+    cookies: cookies
   });
 
   if (!title) {
     const allSongs = await getSongs();
-    return allSongs;
+    return Array.from(allSongs.values());
   }
 
   const { data, error } = await supabase

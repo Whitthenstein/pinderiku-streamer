@@ -1,21 +1,17 @@
 import { useSessionContext } from "@supabase/auth-helpers-react";
 
-import { Song } from "@/types";
-
-const useLoadSongsUrls = (songs: Song[]) => {
+const useLoadSongUrl = () => {
   const { supabaseClient } = useSessionContext();
 
-  if (!songs || songs.length === 0) {
-    return [];
-  }
+  const getSongPublicUrl = (songPath: string) => {
+    const {
+      data: { publicUrl }
+    } = supabaseClient.storage.from("songs").getPublicUrl(songPath);
 
-  return songs.map((song) => {
-    const { data: songData } = supabaseClient.storage
-      .from("songs")
-      .getPublicUrl(song.song_path);
+    return publicUrl;
+  };
 
-    return songData.publicUrl;
-  });
+  return { getSongPublicUrl };
 };
 
-export default useLoadSongsUrls;
+export default useLoadSongUrl;

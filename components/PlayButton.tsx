@@ -1,8 +1,23 @@
+import usePlay from "@/hooks/usePlay";
+import React from "react";
 import { FaPlay } from "react-icons/fa";
 
-const PlayButton = () => {
+interface PlayButtonProps {
+  songId: string;
+}
+
+const PlayButton: React.FC<PlayButtonProps> = ({ songId }) => {
+  const { playSong } = usePlay();
+
+  const handleClick = (event: React.MouseEvent) => {
+    event.preventDefault();
+
+    playSong(songId);
+  };
+
   return (
     <button
+      onClick={handleClick}
       className="
         transition
         opacity-0

@@ -14,19 +14,15 @@ import {
   LuRepeat1
 } from "react-icons/lu";
 
-import usePlayer, { REPEAT_VALUES } from "@/hooks/usePlayer";
-
-import { Song } from "@/types";
+import usePlayer from "@/hooks/usePlayer";
 
 import Wave from "./Wave";
 import MediaItem from "./MediaItem";
 import LikeButton from "./LikeButton";
 import EQBars from "./EQBars";
 import Slider from "./Slider";
-
-interface PlayerContentProps {
-  song: Song;
-}
+import usePlaylist, { REPEAT_VALUES } from "@/hooks/usePlaylist";
+import usePlay from "@/hooks/usePlay";
 
 const getRepeatIcon = (repeatValue: number, toggleRepeat: () => void) => {
   switch (repeatValue) {
@@ -73,79 +69,63 @@ const getVolumeIcon = (volume: number) => {
   return LuVolume2;
 };
 
-const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
-  const player = usePlayer();
+const PlayerContent = () => {
+  const { getIsLoading, getCurrentSong, getWaveform, getSongs } = usePlayer(
+    (state) => state
+  );
+  const currentSong = getCurrentSong();
+  const isLoading = getIsLoading();
+  const waveform = getWaveform();
+  const songs = getSongs();
+
+  const { playNext, playPrevious } = usePlay();
   const [volume, setVolume] = useState(1);
   const previousVolume = usePrevious(volume);
-  const [isPlaying, setIsPlaying] = useState(player.sound?.isPlaying());
+  const [isPlaying, setIsPlaying] = useState(waveform?.isPlaying());
   const Icon = isPlaying ? BsPauseFill : BsPlayFill;
   const VolumeIcon = getVolumeIcon(volume);
 
-  // TODO: fix change activeSong on play next and previous to fix media item in player not changing image
-  const onPlayNext = () => {
-    if (player.isLoading) {
-      return;
-    }
-
-    if (player.urls.length === 0) {
-      return;
-    }
-
-    const currentIndex = player.urls.findIndex(
-      (url) => url === player.activeUrl
-    );
-    const nextSong = player.urls[currentIndex + 1];
-
-    player.setActiveUrl(nextSong ? nextSong : player.urls[0]);
-    player.setIsLoading(true);
-  };
-
-  const onPlayPrevious = () => {
-    if (player.isLoading) {
-      return;
-    }
-    if (player.urls.length === 0) {
-      return;
-    }
-
-    const currentIndex = player.urls.findIndex(
-      (url) => url === player.activeUrl
-    );
-    const previousSong = player.urls[currentIndex - 1];
-
-    player.setActiveUrl(
-      previousSong ? previousSong : player.urls[player.urls.length - 1]
-    );
-    player.setIsLoading(true);
-  };
-
   const handlePlay = useCallback(async () => {
-    if (player.isLoading) {
+    if (isLoading) {
       return;
     }
 
-    player.sound?.playPause();
-  }, [player]);
+    waveform?.playPause();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [waveform]);
+
+  const handlePrevious = () => {
+    if (isLoading || songs.size === 0) {
+      return;
+    }
+
+    playPrevious();
+  };
+
+  const handleNext = () => {
+    if (isLoading || songs.size === 0) {
+      return;
+    }
+
+    playNext();
+  };
 
   const toggleMute = () => {
-    const isMuted = player.sound?.getMuted();
-    player.sound?.setMuted(!isMuted);
+    const isMuted = waveform?.getMuted();
+    waveform?.setMuted(!isMuted);
     if (isMuted) {
       setVolume(previousVolume);
-      player.sound?.setVolume(previousVolume);
+      waveform?.setVolume(previousVolume);
     } else {
       setVolume(0);
-      player.sound?.setVolume(0);
+      waveform?.setVolume(0);
     }
   };
 
   const handleSetVolume = (value: number) => {
     setVolume(value);
-    player.sound?.setVolume(value);
-  };
-
-  const toggleRepeat = () => {
-    player.toggleRepeat();
+    waveform?.setVolume(value);
   };
 
   return (
@@ -160,8 +140,8 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
         "
         >
           <div className="flex items-center w-3/4 gap-x-4">
-            <MediaItem data={song} />
-            <LikeButton songId={song.id} />
+            {currentSong && <MediaItem song={currentSong} />}
+            {currentSong && <LikeButton songId={currentSong.id} />}
           </div>
         </div>
         <div
@@ -194,12 +174,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
           </div>
         </div>
         <div className="hidden md:flex items-center gap-x-4">
-          <Wave
-            song={song}
-            onPlayNext={onPlayNext}
-            onPlayPrevious={onPlayPrevious}
-            setIsPlaying={setIsPlaying}
-          />
+          <Wave setIsPlaying={setIsPlaying} />
         </div>
         <div
           className="
@@ -213,7 +188,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
       "
         >
           <AiFillStepBackward
-            onClick={onPlayPrevious}
+            onClick={handlePrevious}
             size={30}
             className="
             text-neutral-400
@@ -243,14 +218,14 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
             />
           </div>
           <AiFillStepForward
-            onClick={onPlayNext}
+            onClick={handleNext}
             size={30}
             className="
-            text-neutral-400
-            cursor-pointer
-            hover:text-white
-            transition
-          "
+              text-neutral-400
+              cursor-pointer
+              hover:text-white
+              transition
+            "
           />
         </div>
         {/* EQ Bars */}
@@ -259,7 +234,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
         </div>
         <div className="hidden md:flex w-full justify-end pr-2">
           <div className="flex items-center gap-x-2 w-[120px]">
-            {/* {getRepeatIcon(player.repeat, toggleRepeat)} */}
+            {/* {getRepeatIcon(playlist.repeatValue, playlist.toggleRepeat)} */}
             <VolumeIcon
               onClick={toggleMute}
               size={34}

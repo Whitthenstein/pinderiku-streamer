@@ -1,12 +1,9 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 
 import useLoadImage from "@/hooks/useLoadImage";
-
-import { Song } from "@/types";
-
 import {
   Tooltip,
   TooltipContent,
@@ -14,37 +11,27 @@ import {
   TooltipTrigger
 } from "@/components/ui/tooltip";
 
+import { Song } from "@/types";
+
 interface MediaItemProps {
-  data: Song;
+  song: Song;
   onClick?: (id: string) => void;
 }
 
-const MediaItem: React.FC<MediaItemProps> = ({ data, onClick }) => {
-  const router = useRouter();
-
-  const imageUrl = useLoadImage(data);
+const MediaItem: React.FC<MediaItemProps> = ({ song, onClick }) => {
+  const imageUrl = useLoadImage(song);
 
   const handleClick = () => {
-    router.replace(`/song/${data.id}`);
-
     if (onClick) {
-      onClick(data.song_path);
+      onClick(song.id);
     }
   };
 
   return (
-    <div
+    <Link
+      href={`/song/${song.id}`}
       onClick={handleClick}
-      className="
-        flex
-        items-center
-        gap-x-3
-        cursor-pointer
-        hover:bg-neutral-800
-        w-full
-        p-2
-        rounded-md
-      "
+      className="flex items-center gap-x-3 cursor-pointer hover:bg-neutral-800 w-full h-full p-2 rounded-md"
     >
       <div
         className="
@@ -68,17 +55,17 @@ const MediaItem: React.FC<MediaItemProps> = ({ data, onClick }) => {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
-              <p className="text-white truncate">{data.title}</p>
+              <p className="text-white truncate">{song.title}</p>
             </TooltipTrigger>
             <TooltipContent className="border-none text-white bg-neutral-900">
-              <p>{data.title}</p>
+              <p>{song.title}</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
 
-        <p className="text-neutral-400 text-sm truncate">{data.author}</p>
+        <p className="text-neutral-400 text-sm truncate">{song.author}</p>
       </div>
-    </div>
+    </Link>
   );
 };
 

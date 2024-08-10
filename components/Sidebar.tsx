@@ -9,18 +9,21 @@ import { HiHome } from "react-icons/hi";
 
 import usePlayer from "@/hooks/usePlayer";
 
-import { Song } from "@/types";
+import { SongsMap } from "@/types";
 
 import Box from "./Box";
 import { Library } from "./Library";
 import { SidebarItem } from "./SidebarItem";
+
 interface SidebarProps {
   children: React.ReactNode;
-  songs: Song[];
+  songs: SongsMap;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ children, songs }) => {
-  const player = usePlayer();
+  const { getWaveform } = usePlayer((state) => state);
+  const waveform = getWaveform();
+
   const pathname = usePathname();
   const routes = useMemo(
     () => [
@@ -46,7 +49,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children, songs }) => {
       flex
       h-full
     `,
-        player.activeUrl && "h-[calc(100%-88px)]"
+        waveform?.isPlaying() && "h-[calc(100%-88px)]"
       )}
     >
       <div
