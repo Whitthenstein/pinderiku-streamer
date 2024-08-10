@@ -2,21 +2,22 @@ import { useEffect, useState } from "react";
 import WaveSurfer from "wavesurfer.js";
 import HoverPlugin from "wavesurfer.js/dist/plugins/hover.js";
 
-import usePlayer, { REPEAT_VALUES } from "@/hooks/usePlayer";
-
-import { Song } from "@/types";
+import usePlayer from "@/hooks/usePlayer";
 
 import WaveformLoader from "./WaveformLoader";
+import usePlay from "@/hooks/usePlay";
 
 interface WaveProps {
-  song: Song;
-  onPlayNext: () => void;
-  onPlayPrevious: () => void;
   setIsPlaying: (value: boolean) => void;
 }
 
-const Wave: React.FC<WaveProps> = ({ onPlayNext, setIsPlaying }) => {
-  const player = usePlayer();
+const Wave: React.FC<WaveProps> = ({ setIsPlaying }) => {
+  const { getIsLoading, setIsLoading, setWaveform, setMedia } = usePlayer(
+    (state) => state
+  );
+  const isLoading = getIsLoading();
+
+  const { playNext } = usePlay();
   const [waverformElement, setWaveformElement] = useState<HTMLElement | null>(
     null
   );
@@ -88,49 +89,36 @@ const Wave: React.FC<WaveProps> = ({ onPlayNext, setIsPlaying }) => {
     });
 
     wavesurfer.on("ready", () => {
-      wavesurfer.playPause();
-      player.setIsLoading(false);
-      wavesurfer.setTime(0);
+      audioMedia.currentTime = 0;
+      audioMedia.play();
+      setIsLoading(false);
     });
 
-    wavesurfer.on("pause", () => {
+    wavesurfer.on("decode", (duration) => {
+      setSongDuration(formatTime(duration));
+    });
+
+    audioMedia.addEventListener("pause", () => {
       setIsPlaying(false);
     });
 
-    wavesurfer.on("play", () => {
+    audioMedia.addEventListener("play", () => {
       setIsPlaying(true);
     });
 
     const timeEl = document.querySelector("#time");
-    wavesurfer.on("decode", (duration) => {
-      setSongDuration(formatTime(duration));
-    });
-    wavesurfer.on(
+    audioMedia.addEventListener(
       "timeupdate",
-      (currentTime) => (timeEl!.textContent = formatTime(currentTime))
+      () => (timeEl!.textContent = formatTime(audioMedia.currentTime))
     );
 
-    wavesurfer.on("finish", () => {
-      // switch (player.repeat) {
-      //   case REPEAT_VALUES.NO_REPEAT:
-      //     console.log("no repeat", onPlayNext)
-      //     player.setIsLoading(false);
-      //     onPlayNext();
-      //     break;
-      //   case REPEAT_VALUES.REPEAT_ALL:
-      //     console.log("all")
-      //     onPlayNext();
-      //     break;
-      //   case REPEAT_VALUES.REPEAT_CURRENT:
-      //     console.log("current")
-      //     wavesurfer.setTime(0);
-      //     player.setIsLoading(false);
-      //     break;
-      // }
+    audioMedia.addEventListener("ended", () => {
+      console.log("ended");
+      playNext();
     });
 
-    player.setSound(wavesurfer);
-    player.setMedia(audioMedia);
+    setWaveform(wavesurfer);
+    setMedia(audioMedia);
 
     // add custom cursor animation to shadowDOM
     const host = waveform.children[3];
@@ -156,20 +144,7 @@ const Wave: React.FC<WaveProps> = ({ onPlayNext, setIsPlaying }) => {
     waverformElement?.classList.toggle("fade");
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [player.isLoading]);
-
-  useEffect(() => {
-    if (player.activeUrl) {
-      player.sound?.load(player.activeUrl, player.activePeakData);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [player.activeUrl, player.sound, player.setIsLoading]);
-
-  useEffect(() => {
-    player.sound?.on("finish", () => {
-      onPlayNext();
-    });
-  }, [player.sound, onPlayNext]);
+  }, [isLoading]);
 
   return (
     <div
@@ -185,13 +160,13 @@ const Wave: React.FC<WaveProps> = ({ onPlayNext, setIsPlaying }) => {
           id="time"
           className="pointer-events-none select-none absolute z-10 top-1/2 mt--1 translate-y--1/2 text-[11px] bg-opacity-75 left-0"
         >
-          {!player.isLoading && "0:00"}
+          {!isLoading && "0:00"}
         </div>
         <div
           id="duration"
           className="pointer-events-none select-none absolute z-10 top-1/2 mt--1 translate-y--1/2 text-[11px] bg-opacity-75 right-0"
         >
-          {!player.isLoading && songDuration}
+          {!isLoading && songDuration}
         </div>
         <div id="hover"></div>
       </div>

@@ -1,62 +1,90 @@
-import { Song } from "@/types";
+import { Song, SongsMap } from "@/types";
 import WaveSurfer from "wavesurfer.js";
 import { create } from "zustand";
 
-export const enum REPEAT_VALUES {
-  NO_REPEAT,
-  REPEAT_ALL,
-  REPEAT_CURRENT,
-  __LENGTH
-}
+import usePlaylist from "./usePlaylist";
 
 interface PlayerStore {
-  sound: WaveSurfer | null;
+  // attributes
+  waveform: WaveSurfer | null;
   media: HTMLAudioElement | null;
-  urls: string[];
-  activeSong: Song | undefined;
-  activeUrl: string | undefined;
-  activePeakData: number[][] | undefined;
-  currentIndex: number;
+  songs: SongsMap;
   isLoading: boolean;
-  repeat: number;
-  setSound: (newSound: WaveSurfer) => void;
+
+  // setters
+  setWaveform: (waveform: WaveSurfer) => void;
   setMedia: (newMedia: HTMLAudioElement) => void;
-  setUrls: (urls: string[]) => void;
-  setActiveSong: (song: Song) => void;
-  setActiveUrl: (url: string | undefined) => void;
-  setActivePeakData: (peakData: number[][]) => void;
+  setSongs: (songs: SongsMap) => void;
   setIsLoading: (value: boolean) => void;
-  toggleRepeat: () => void;
+
+  // getters
+  getWaveform: () => WaveSurfer | null;
+  getMedia: () => HTMLAudioElement | null;
+  getSongs: () => SongsMap;
+  getIsLoading: () => boolean;
+  getSongsArray: (receivedSongsMap?: SongsMap) => Song[];
+  getCurrentSong: () => Song | undefined;
+  getSongById: (songId: string) => Song | undefined;
 }
 
 const usePlayer = create<PlayerStore>((set) => ({
-  sound: null,
+  // initial state
+  waveform: null,
   media: null,
-  activeSong: undefined,
-  activeUrl: undefined,
-  activePeakData: undefined,
-  urls: [],
-  currentIndex: 0,
+  songs: new Map(),
   isLoading: true,
-  repeat: REPEAT_VALUES.NO_REPEAT,
-  setSound: (wave: WaveSurfer) => set({ sound: wave }),
-  setMedia: (newMedia: HTMLAudioElement) => set({ media: newMedia }),
-  setUrls: (newUrls: string[]) => set({ urls: newUrls }),
-  setActiveUrl: (url: string | undefined) => set({ activeUrl: url }),
-  setActiveSong(song: Song) {
-    this.setActivePeakData(song.peak_data);
-    set({ activeSong: song });
+
+  // setters
+  setWaveform: (waveform: WaveSurfer) => {
+    set({ waveform });
   },
-  setActivePeakData: (peakData: number[][]) =>
-    set({ activePeakData: peakData }),
-  setCurrentIndex: (index: number) => set({ currentIndex: index }),
-  setIsLoading: (value: boolean) => set({ isLoading: value }),
-  toggleRepeat() {
-    if (this.repeat === REPEAT_VALUES.__LENGTH - 1) {
-      set({ repeat: 0 });
-    } else {
-      set({ repeat: this.repeat + 1 });
+  setMedia: (newMedia: HTMLAudioElement) => {
+    set({ media: newMedia });
+  },
+  setSongs: (songs: SongsMap) => {
+    set({ songs });
+  },
+  setIsLoading: (value: boolean) => {
+    set({ isLoading: value });
+  },
+
+  //getters
+  getWaveform: () => {
+    const state = usePlayer.getState() as PlayerStore;
+    return state.waveform;
+  },
+  getMedia: () => {
+    const state = usePlayer.getState() as PlayerStore;
+    return state.media;
+  },
+  getSongs: () => {
+    const state = usePlayer.getState() as PlayerStore;
+    return state.songs;
+  },
+  getIsLoading: () => {
+    const state = usePlayer.getState() as PlayerStore;
+    return state.isLoading;
+  },
+  getSongsArray: (receivedSongsMap?: SongsMap) => {
+    const state = usePlayer.getState() as PlayerStore;
+
+    return Array.from(
+      receivedSongsMap ? receivedSongsMap.values() : state.songs.values()
+    );
+  },
+  getCurrentSong: () => {
+    const state = usePlayer.getState() as PlayerStore;
+    const playlist = usePlaylist.getState();
+
+    if (!playlist) {
+      return undefined;
     }
+
+    return state.songs.get(playlist.getCurrentSongId());
+  },
+  getSongById: (songId: string) => {
+    const state = usePlayer.getState() as PlayerStore;
+    return state.songs.get(songId);
   }
 }));
 

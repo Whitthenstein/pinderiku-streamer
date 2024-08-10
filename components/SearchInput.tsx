@@ -11,11 +11,11 @@ import Input from "./Input";
 const SearchInput = () => {
   const router = useRouter();
   const [value, setValue] = useState<string>("");
-  const debaouncedValue = useDebounce<string>(value, 500);
+  const debouncedValue = useDebounce<string>(value, 500);
 
   useEffect(() => {
     const query = {
-      title: debaouncedValue
+      title: debouncedValue
     };
 
     const url = qs.stringifyUrl({
@@ -24,7 +24,7 @@ const SearchInput = () => {
     });
 
     router.push(url);
-  }, [debaouncedValue, router]);
+  }, [debouncedValue, router]);
 
   return (
     <Input

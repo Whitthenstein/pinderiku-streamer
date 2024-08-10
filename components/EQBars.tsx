@@ -5,13 +5,15 @@ import usePlayer from "@/hooks/usePlayer";
 import WaveformLoader from "./WaveformLoader";
 
 const EQBars = () => {
-  const player = usePlayer();
+  const { getIsLoading, getMedia } = usePlayer((state) => state);
   const [eqLoaderElement, setEqLoaderElement] = useState<HTMLElement | null>(
     null
   );
   const [canvasContainer, setCanvasContainer] = useState<HTMLElement | null>(
     null
   );
+
+  const isLoading = getIsLoading();
 
   useEffect(() => {
     const audioCtx = new AudioContext();
@@ -37,7 +39,7 @@ const EQBars = () => {
     const HEIGHT = canvasOne.height;
 
     const analyser = audioCtx.createAnalyser();
-    const mediaElement = player.media as any;
+    const mediaElement = getMedia() as any;
     const stream = mediaElement?.captureStream();
 
     if (!stream) {
@@ -82,7 +84,7 @@ const EQBars = () => {
       for (let i = 0; i < dataArray.length; i++) {
         bar_x = i * 3;
         bar_width = 1;
-        bar_height = -(dataArray[i] / 1.7);
+        bar_height = -(dataArray[i] / Math.log(i));
         canvasCtxOne!.fillRect(bar_x, HEIGHT, bar_width, bar_height);
         canvasCtxTwo!.fillRect(bar_x, HEIGHT, bar_width, bar_height);
       }
@@ -90,12 +92,12 @@ const EQBars = () => {
 
     draw();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [player.isLoading]);
+  }, [isLoading]);
 
   useEffect(() => {
     eqLoaderElement?.classList.toggle("fade");
     canvasContainer?.classList.toggle("fade");
-  }, [player.isLoading, eqLoaderElement, canvasContainer]);
+  }, [isLoading, eqLoaderElement, canvasContainer]);
 
   return (
     <div className="relative w-full h-full items-center justify-center">
@@ -106,11 +108,11 @@ const EQBars = () => {
       >
         <canvas
           id="eq-bars-1"
-          className="absolute h-[40px] w-full"
+          className="absolute top-[15px] h-[30px] w-full"
         />
         <canvas
           id="eq-bars-2"
-          className="absolute top-[40px] h-[40px] w-full transform -scale-y-100"
+          className="absolute top-[45px] h-[30px] w-full transform -scale-y-100"
         />
       </div>
     </div>

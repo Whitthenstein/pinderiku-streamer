@@ -3,17 +3,21 @@
 import usePlayer from "@/hooks/usePlayer";
 
 import PlayerContent from "./PlayerContent";
+import { cn } from "@/libs/utils";
 
 const Player = () => {
-  const { activeSong } = usePlayer();
+  const { getCurrentSong } = usePlayer((state) => state);
 
-  if (!activeSong) {
-    return null;
-  }
+  const currentSong = getCurrentSong();
 
   return (
-    <div className="absolute bottom-0 w-full h-[88px]">
-      <PlayerContent song={activeSong} />
+    <div
+      className={cn(
+        "absolute bottom-0 w-full h-[88px] bg-black",
+        !currentSong ? "invisible" : ""
+      )}
+    >
+      <PlayerContent />
     </div>
   );
 };
