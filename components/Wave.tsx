@@ -17,7 +17,7 @@ const Wave: React.FC<WaveProps> = ({ setIsPlaying }) => {
   );
   const isLoading = getIsLoading();
 
-  const { playNext } = usePlay();
+  const { onFinish } = usePlay();
   const [waverformElement, setWaveformElement] = useState<HTMLElement | null>(
     null
   );
@@ -88,9 +88,7 @@ const Wave: React.FC<WaveProps> = ({ setIsPlaying }) => {
       hover!.style.width = `${e.offsetX}px`;
     });
 
-    wavesurfer.on("ready", () => {
-      audioMedia.currentTime = 0;
-      audioMedia.play();
+    audioMedia.addEventListener("canplay", () => {
       setIsLoading(false);
     });
 
@@ -113,8 +111,7 @@ const Wave: React.FC<WaveProps> = ({ setIsPlaying }) => {
     );
 
     audioMedia.addEventListener("ended", () => {
-      console.log("ended");
-      playNext();
+      onFinish();
     });
 
     setWaveform(wavesurfer);
