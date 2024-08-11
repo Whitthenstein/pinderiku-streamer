@@ -126,6 +126,32 @@ const PlayerContent = () => {
     playNext();
   };
 
+  const handleBackward = () => {
+    if (!audioMedia) {
+      return;
+    }
+
+    const newTime = audioMedia.currentTime - 5;
+    if (newTime < 0) {
+      playPrevious();
+    } else {
+      audioMedia.currentTime = newTime;
+    }
+  };
+
+  const handleForward = () => {
+    if (!audioMedia) {
+      return;
+    }
+
+    const newTime = audioMedia.currentTime + 5;
+    if (newTime > audioMedia.duration) {
+      playNext();
+    } else {
+      audioMedia.currentTime = newTime;
+    }
+  };
+
   const toggleMute = () => {
     const isMuted = waveform?.getMuted();
     waveform?.setMuted(!isMuted);
@@ -222,6 +248,7 @@ const PlayerContent = () => {
         "
           />
           <BsFillSkipBackwardFill
+            onClick={handleBackward}
             size={25}
             className="
             text-neutral-400
@@ -260,6 +287,7 @@ const PlayerContent = () => {
           </div>
 
           <BsFillSkipForwardFill
+            onClick={handleForward}
             size={25}
             className="
               text-neutral-400
