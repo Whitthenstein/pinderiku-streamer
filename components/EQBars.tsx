@@ -6,6 +6,9 @@ import WaveformLoader from "./WaveformLoader";
 
 const EQBars = () => {
   const { getIsLoading, getMedia } = usePlayer((state) => state);
+  const isLoading = getIsLoading();
+  const mediaElement = getMedia();
+
   const [eqLoaderElement, setEqLoaderElement] = useState<HTMLElement | null>(
     null
   );
@@ -13,24 +16,28 @@ const EQBars = () => {
     null
   );
 
-  const isLoading = getIsLoading();
+  useEffect(() => {
+    const renderedCanvasContainer =
+      document.getElementById("canvas-container")!;
+
+    setCanvasContainer(renderedCanvasContainer);
+
+    const eqLoader = document.getElementById(
+      "eq-loader"
+    ) as HTMLProgressElement;
+
+    setEqLoaderElement(eqLoader);
+  }, []);
 
   useEffect(() => {
-    const audioCtx = new AudioContext();
-
-    const canvasElements = [
-      document.getElementById("eq-bars-1"),
-      document.getElementById("eq-bars-2")
-    ];
-
-    if (!canvasElements[0] || !canvasElements[1]) {
+    if (!canvasContainer) {
       return;
     }
+    const audioCtx = new AudioContext();
 
-    setCanvasContainer(document.getElementById("canvas-container"));
-
-    const canvasOne = canvasElements[0] as HTMLCanvasElement;
-    const canvasTwo = canvasElements[1] as HTMLCanvasElement;
+    const [canvasOne, canvasTwo] = Array.from(
+      canvasContainer.children
+    ) as HTMLCanvasElement[];
 
     const canvasCtxOne = canvasOne!.getContext("2d");
     const canvasCtxTwo = canvasTwo!.getContext("2d");
@@ -39,8 +46,7 @@ const EQBars = () => {
     const HEIGHT = canvasOne.height;
 
     const analyser = audioCtx.createAnalyser();
-    const mediaElement = getMedia() as any;
-    const stream = mediaElement?.captureStream();
+    const stream = (mediaElement as any)?.captureStream();
 
     if (!stream) {
       return;
@@ -49,12 +55,6 @@ const EQBars = () => {
     if (stream.getAudioTracks().length === 0) {
       return;
     }
-
-    const eqLoader = document.getElementById(
-      "eq-loader"
-    ) as HTMLProgressElement;
-
-    setEqLoaderElement(eqLoader);
 
     const source = audioCtx.createMediaStreamSource(stream);
     source.connect(analyser);
@@ -92,12 +92,14 @@ const EQBars = () => {
 
     draw();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading]);
+  }, [isLoading, canvasContainer, mediaElement]);
 
   useEffect(() => {
     eqLoaderElement?.classList.toggle("fade");
     canvasContainer?.classList.toggle("fade");
-  }, [isLoading, eqLoaderElement, canvasContainer]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading]);
 
   return (
     <div className="relative w-full h-full items-center justify-center">

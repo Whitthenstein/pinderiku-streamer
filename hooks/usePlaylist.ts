@@ -25,6 +25,7 @@ export interface PlaylistStore {
   getPreviousSongId: () => string;
   getNextSongPlaylistIndex: () => number;
   getNextSongId: () => string;
+  getPlaylistLength: () => number;
   getRepeatValue: () => REPEAT_VALUES;
 }
 
@@ -98,6 +99,11 @@ const usePlaylist = create<PlaylistStore>((set) => ({
     const state = usePlaylist.getState() as PlaylistStore;
 
     return state.playlist[state.getNextSongPlaylistIndex()];
+  },
+  getPlaylistLength: () => {
+    const state = usePlaylist.getState() as PlaylistStore;
+
+    return state.playlist.length;
   },
   getRepeatValue: () => {
     const state = usePlaylist.getState() as PlaylistStore;

@@ -1,11 +1,18 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { usePrevious } from "@uidotdev/usehooks";
 
 import { ScaleLoader } from "react-spinners";
-import { BsPauseFill, BsPlayFill } from "react-icons/bs";
-import { AiFillStepBackward, AiFillStepForward } from "react-icons/ai";
+import {
+  BsPauseFill,
+  BsPlayFill,
+  BsFillSkipEndFill,
+  BsFillSkipStartFill,
+  BsFillSkipBackwardFill,
+  BsFillSkipForwardFill
+} from "react-icons/bs";
+
 import {
   LuVolume,
   LuVolume1,
@@ -71,13 +78,16 @@ const getVolumeIcon = (volume: number) => {
 };
 
 const PlayerContent = () => {
-  const { getIsLoading, getCurrentSong, getWaveform, getSongs } = usePlayer(
-    (state) => state
-  );
+  const { getIsLoading, getCurrentSong, getWaveform, getMedia, getSongs } =
+    usePlayer((state) => state);
   const currentSong = getCurrentSong();
   const isLoading = getIsLoading();
   const waveform = getWaveform();
+  const audioMedia = getMedia();
   const songs = getSongs();
+
+  const { getRepeatValue, toggleRepeat } = usePlaylist((state) => state);
+  const repeatValue = getRepeatValue();
 
   const { playNext, playPrevious } = usePlay();
   const [volume, setVolume] = useState(1);
@@ -86,15 +96,19 @@ const PlayerContent = () => {
   const Icon = isPlaying ? BsPauseFill : BsPlayFill;
   const VolumeIcon = getVolumeIcon(volume);
 
-  const handlePlay = useCallback(async () => {
-    if (isLoading) {
+  const handlePlay = async () => {
+    if (isLoading || !audioMedia) {
       return;
     }
 
-    waveform?.playPause();
+    if (audioMedia.paused) {
+      audioMedia.play();
+    } else {
+      audioMedia.pause();
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [waveform]);
+  };
 
   const handlePrevious = () => {
     if (isLoading || songs.size === 0) {
@@ -196,9 +210,19 @@ const PlayerContent = () => {
         gap-x-6
       "
         >
-          <AiFillStepBackward
+          <BsFillSkipStartFill
             onClick={handlePrevious}
-            size={30}
+            size={20}
+            className="
+            text-neutral-400
+            cursor-pointer
+            hover:text-white
+            transition
+
+        "
+          />
+          <BsFillSkipBackwardFill
+            size={25}
             className="
             text-neutral-400
             cursor-pointer
@@ -234,9 +258,19 @@ const PlayerContent = () => {
               />
             )}
           </div>
-          <AiFillStepForward
+
+          <BsFillSkipForwardFill
+            size={25}
+            className="
+              text-neutral-400
+              cursor-pointer
+              hover:text-white
+              transition
+            "
+          />
+          <BsFillSkipEndFill
             onClick={handleNext}
-            size={30}
+            size={20}
             className="
               text-neutral-400
               cursor-pointer
@@ -251,7 +285,7 @@ const PlayerContent = () => {
         </div>
         <div className="hidden md:flex w-full justify-end pr-2">
           <div className="flex items-center gap-x-2 w-[120px]">
-            {/* {getRepeatIcon(playlist.repeatValue, playlist.toggleRepeat)} */}
+            {getRepeatIcon(repeatValue, toggleRepeat)}
             <VolumeIcon
               onClick={toggleMute}
               size={34}
