@@ -12,17 +12,12 @@ interface WaveProps {
 }
 
 const Wave: React.FC<WaveProps> = ({ setIsPlaying }) => {
-  const { getIsLoading, setIsLoading, setWaveform, setMedia } = usePlayer(
-    (state) => state
-  );
+  const { getIsLoading, setIsLoading, setWaveform, setMedia } = usePlayer((state) => state);
   const isLoading = getIsLoading();
 
   const { onFinish } = usePlay();
-  const [waverformElement, setWaveformElement] = useState<HTMLElement | null>(
-    null
-  );
-  const [waverformLoaderElement, setWaveformLoaderElement] =
-    useState<HTMLElement | null>(null);
+  const [waverformElement, setWaveformElement] = useState<HTMLElement | null>(null);
+  const [waverformLoaderElement, setWaveformLoaderElement] = useState<HTMLElement | null>(null);
   const [songDuration, setSongDuration] = useState("0:00");
 
   useEffect(() => {
@@ -77,9 +72,7 @@ const Wave: React.FC<WaveProps> = ({ setIsPlaying }) => {
     // Hover effect
     const hover = document.querySelector("#hover") as HTMLElement;
     const waveform = document.querySelector("#waveform") as HTMLElement;
-    const waveformLoader = document.getElementById(
-      "waveform-loader"
-    ) as HTMLProgressElement;
+    const waveformLoader = document.getElementById("waveform-loader") as HTMLProgressElement;
 
     setWaveformElement(waveform);
     setWaveformLoaderElement(waveformLoader);
@@ -146,22 +139,22 @@ const Wave: React.FC<WaveProps> = ({ setIsPlaying }) => {
   return (
     <div
       id="waveform-container"
-      className="relative w-full h-full pt-5 items-center"
+      className="relative h-full w-full items-center pt-5"
     >
       <WaveformLoader id="waveform-loader" />
       <div
         id="waveform"
-        className="cursor-pointer fade-animation fade"
+        className="fade-animation fade cursor-pointer"
       >
         <div
           id="time"
-          className="pointer-events-none select-none absolute z-10 top-1/2 mt--1 translate-y--1/2 text-[11px] bg-opacity-75 left-0"
+          className="pointer-events-none absolute left-0 top-1/2 z-10 mt--1 translate-y--1/2 select-none bg-opacity-75 text-[11px]"
         >
           {!isLoading && "0:00"}
         </div>
         <div
           id="duration"
-          className="pointer-events-none select-none absolute z-10 top-1/2 mt--1 translate-y--1/2 text-[11px] bg-opacity-75 right-0"
+          className="pointer-events-none absolute right-0 top-1/2 z-10 mt--1 translate-y--1/2 select-none bg-opacity-75 text-[11px]"
         >
           {!isLoading && songDuration}
         </div>

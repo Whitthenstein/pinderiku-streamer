@@ -12,10 +12,7 @@ const Player = () => {
 
   return (
     <div
-      className={cn(
-        "absolute bottom-0 w-full h-[88px] bg-black",
-        !currentSong ? "invisible" : ""
-      )}
+      className={cn("absolute bottom-0 h-[88px] w-full bg-black", !currentSong ? "invisible" : "")}
     >
       <PlayerContent />
     </div>

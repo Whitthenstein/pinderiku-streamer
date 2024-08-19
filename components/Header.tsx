@@ -28,7 +28,7 @@ interface ButtonProps {
 
 const MobileViewButton: React.FC<ButtonProps> = ({ ButtonIcon }) => {
   return (
-    <button className="rounded-full p-2 bg-white flex items-center justify-center hover:opacity-75 transition">
+    <button className="flex items-center justify-center rounded-full bg-white p-2 transition hover:opacity-75">
       <ButtonIcon
         className="text-black"
         size={20}
@@ -39,7 +39,7 @@ const MobileViewButton: React.FC<ButtonProps> = ({ ButtonIcon }) => {
 
 const DesktopViewButton: React.FC<ButtonProps> = ({ ButtonIcon, onClick }) => {
   return (
-    <button className="rounded-full bg-black flex items-center justify-center hover:opacity-75 transition">
+    <button className="flex items-center justify-center rounded-full bg-black transition hover:opacity-75">
       <ButtonIcon
         onClick={onClick}
         size={35}
@@ -69,14 +69,9 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
   };
 
   return (
-    <div
-      className={twMerge(
-        `h-fit bg-gradient-to-b from-emerald-800 p-6`,
-        className
-      )}
-    >
-      <div className="w-full mb-4 flex items-center justify-between">
-        <div className="hidden md:flex gap-x-2 items-center">
+    <div className={twMerge(`h-fit bg-gradient-to-b from-emerald-800 p-6`, className)}>
+      <div className="mb-4 flex w-full items-center justify-between">
+        <div className="hidden items-center gap-x-2 md:flex">
           <DesktopViewButton
             ButtonIcon={RxCaretLeft}
             onClick={() => router.back()}
@@ -86,7 +81,7 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
             onClick={() => router.forward()}
           />
         </div>
-        <div className="flex md:hidden gap-x-2 items-center">
+        <div className="flex items-center gap-x-2 md:hidden">
           <MobileViewButton
             ButtonIcon={HiHome}
             onClick={() => router.push("/")}
@@ -96,9 +91,9 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
             onClick={() => router.push("/search")}
           />
         </div>
-        <div className="flex justify-between items-center gap-x-4">
+        <div className="flex items-center justify-between gap-x-4">
           {user ? (
-            <div className="flex gap-x-4 items-center">
+            <div className="flex items-center gap-x-4">
               <Button
                 onClick={handleLogout}
                 className="bg-white px-6 py-2"
@@ -116,7 +111,7 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
             <>
               <div>
                 <Button
-                  className="bg-transparent text-neutral-300 font-medium"
+                  className="bg-transparent font-medium text-neutral-300"
                   onClick={() => authModal.onOpen("sign_up")}
                 >
                   Sign Up

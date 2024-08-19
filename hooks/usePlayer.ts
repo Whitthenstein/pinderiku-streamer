@@ -68,9 +68,7 @@ const usePlayer = create<PlayerStore>((set) => ({
   getSongsArray: (receivedSongsMap?: SongsMap) => {
     const state = usePlayer.getState() as PlayerStore;
 
-    return Array.from(
-      receivedSongsMap ? receivedSongsMap.values() : state.songs.values()
-    );
+    return Array.from(receivedSongsMap ? receivedSongsMap.values() : state.songs.values());
   },
   getCurrentSong: () => {
     const state = usePlayer.getState() as PlayerStore;
