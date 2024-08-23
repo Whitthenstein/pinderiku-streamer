@@ -1,6 +1,8 @@
 import usePlayer from "@/hooks/usePlayer";
 import usePlaylist, { REPEAT_VALUES } from "./usePlaylist";
 import useLoadSongUrl from "./useLoadSongsUrls";
+import { useWavesurfer } from "./useWavesurfer";
+import { useEffect, useState } from "react";
 
 const usePlay = () => {
   const { getSongById, setIsLoading, getSongsArray, getWaveform, getMedia } = usePlayer(

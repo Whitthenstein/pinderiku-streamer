@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePrevious } from "@uidotdev/usehooks";
 
 import { ScaleLoader } from "react-spinners";
@@ -24,6 +24,12 @@ import EQBars from "./EQBars";
 import Slider from "./Slider";
 import usePlaylist, { REPEAT_VALUES } from "@/hooks/usePlaylist";
 import usePlay from "@/hooks/usePlay";
+import useLoadSongUrl from "@/hooks/useLoadSongsUrls";
+import {
+  GeneratedWaveSurferElements,
+  generateElementsForWavesurfer
+} from "@/libs/waveSurferHelper";
+import WaveSurferPlayer from "./WaveSurferPlayer";
 
 const getRepeatIcon = (repeatValue: number, toggleRepeat: () => void) => {
   switch (repeatValue) {
@@ -71,9 +77,9 @@ const getVolumeIcon = (volume: number) => {
 };
 
 const PlayerContent = () => {
-  const { getIsLoading, getCurrentSong, getWaveform, getMedia, getSongs } = usePlayer(
-    (state) => state
-  );
+  const { getIsLoading, getCurrentSong, getWaveform, getMedia, getSongs, getSongsArray } =
+    usePlayer((state) => state);
+  const { getSongPublicUrl } = useLoadSongUrl();
   const currentSong = getCurrentSong();
   const isLoading = getIsLoading();
   const waveform = getWaveform();
@@ -86,9 +92,17 @@ const PlayerContent = () => {
   const { playNext, playPrevious } = usePlay();
   const [volume, setVolume] = useState(1);
   const previousVolume = usePrevious(volume);
+  const [waveSurferElements, setWaveSurferElements] = useState<
+    GeneratedWaveSurferElements | undefined
+  >();
   const [isPlaying, setIsPlaying] = useState(waveform?.isPlaying());
   const Icon = isPlaying ? BsPauseFill : BsPlayFill;
   const VolumeIcon = getVolumeIcon(volume);
+
+  useEffect(() => {
+    const wsElements = generateElementsForWavesurfer(document);
+    setWaveSurferElements(wsElements);
+  }, []);
 
   const handlePlay = async () => {
     if (isLoading || !audioMedia) {
@@ -163,6 +177,10 @@ const PlayerContent = () => {
     waveform?.setVolume(value);
   };
 
+  const songUrl = getSongPublicUrl(
+    currentSong ? currentSong.song_path : getSongsArray()[0].song_path // get first song on library
+  );
+
   return (
     <div className="flex h-full w-full flex-col items-center">
       <div className="grid h-full w-full grid-cols-2 px-4 md:grid-cols-5">
@@ -192,6 +210,23 @@ const PlayerContent = () => {
           </div>
         </div>
         <div className="hidden items-center gap-x-4 md:flex">
+          {/* <WaveSurferPlayer
+            waveColor={waveSurferElements?.gradient}
+            progressColor={waveSurferElements?.progressGradient}
+            url={songUrl}
+            setIsPlaying={setIsPlaying}
+            // onPlay={setCurrentPlayer}
+            onPlay={() => {}}
+            autoplay={false}
+            height={40}
+            normalize={true}
+            barWidth={4}
+            barGap={2}
+            barRadius={2}
+            dragToSeek={true}
+            // onReady={index === 0 ? setCurrentPlayer : undefined}
+            onReady={() => {}}
+          /> */}
           <Wave setIsPlaying={setIsPlaying} />
         </div>
         <div className="hidden h-full w-full items-center justify-center gap-x-6 md:flex">

@@ -11,7 +11,15 @@ const useLoadSongUrl = () => {
     return publicUrl;
   };
 
-  return { getSongPublicUrl };
+  const getSongImagePublicUrl = (imagePath: string) => {
+    const {
+      data: { publicUrl }
+    } = supabaseClient.storage.from("images").getPublicUrl(imagePath);
+
+    return publicUrl;
+  };
+
+  return { getSongPublicUrl, getSongImagePublicUrl };
 };
 
 export default useLoadSongUrl;

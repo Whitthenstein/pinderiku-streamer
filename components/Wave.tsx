@@ -1,22 +1,28 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import WaveSurfer from "wavesurfer.js";
-import HoverPlugin from "wavesurfer.js/dist/plugins/hover.js";
 
 import usePlayer from "@/hooks/usePlayer";
 
 import WaveformLoader from "./WaveformLoader";
 import usePlay from "@/hooks/usePlay";
+import { generateElementsForWavesurfer } from "@/libs/waveSurferHelper";
+import { formatTime } from "@/libs/helpers";
+import HoverPlugin from "wavesurfer.js/dist/plugins/hover.js";
+import WaveSurferPlayer from "./WaveSurferPlayer";
 
 interface WaveProps {
   setIsPlaying: (value: boolean) => void;
 }
 
 const Wave: React.FC<WaveProps> = ({ setIsPlaying }) => {
-  const { getIsLoading, setIsLoading, setWaveform, setMedia } = usePlayer((state) => state);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { getIsLoading, setIsLoading, setMedia, getCurrentSong, setWaveform, setRef } = usePlayer(
+    (state) => state
+  );
   const isLoading = getIsLoading();
 
   const { onFinish } = usePlay();
-  const [waverformElement, setWaveformElement] = useState<HTMLElement | null>(null);
+  const [waveformElement, setWaveformElement] = useState<HTMLElement | null>(null);
   const [waverformLoaderElement, setWaveformLoaderElement] = useState<HTMLElement | null>(null);
   const [songDuration, setSongDuration] = useState("0:00");
 
@@ -62,16 +68,8 @@ const Wave: React.FC<WaveProps> = ({ setIsPlaying }) => {
       ]
     });
 
-    const formatTime = (seconds: number) => {
-      const minutes = Math.floor(Math.round(seconds) / 60);
-      const secondsRemainder = Math.round(seconds) % 60;
-      const paddedSeconds = `0${secondsRemainder}`.slice(-2);
-      return `${minutes}:${paddedSeconds}`;
-    };
-
-    // Hover effect
-    const hover = document.querySelector("#hover") as HTMLElement;
-    const waveform = document.querySelector("#waveform") as HTMLElement;
+    const hover = document.querySelector("#hover") as HTMLElement; // Hover effect
+    const waveform = document.querySelector("#waveform") as HTMLDivElement;
     const waveformLoader = document.getElementById("waveform-loader") as HTMLProgressElement;
 
     setWaveformElement(waveform);
@@ -97,7 +95,7 @@ const Wave: React.FC<WaveProps> = ({ setIsPlaying }) => {
       setIsPlaying(true);
     });
 
-    const timeEl = document.querySelector("#time");
+    const timeEl = document.querySelector("#waveform_time");
     audioMedia.addEventListener(
       "timeupdate",
       () => (timeEl!.textContent = formatTime(audioMedia.currentTime))
@@ -109,6 +107,7 @@ const Wave: React.FC<WaveProps> = ({ setIsPlaying }) => {
 
     setWaveform(wavesurfer);
     setMedia(audioMedia);
+    setRef(containerRef);
 
     // add custom cursor animation to shadowDOM
     const host = waveform.children[3];
@@ -131,7 +130,7 @@ const Wave: React.FC<WaveProps> = ({ setIsPlaying }) => {
 
   useEffect(() => {
     waverformLoaderElement?.classList.toggle("fade");
-    waverformElement?.classList.toggle("fade");
+    waveformElement?.classList.toggle("fade");
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading]);
@@ -143,19 +142,17 @@ const Wave: React.FC<WaveProps> = ({ setIsPlaying }) => {
     >
       <WaveformLoader id="waveform-loader" />
       <div
+        ref={containerRef}
         id="waveform"
         className="fade-animation fade cursor-pointer"
       >
         <div
-          id="time"
-          className="pointer-events-none absolute left-0 top-1/2 z-10 mt--1 translate-y--1/2 select-none bg-opacity-75 text-[11px]"
+          id="waveform_time"
+          className="wave_time pointer-events-none absolute left-0 top-1/2 mt--1 translate-y--1/2 select-none bg-opacity-75 text-[11px]"
         >
           {!isLoading && "0:00"}
         </div>
-        <div
-          id="duration"
-          className="pointer-events-none absolute right-0 top-1/2 z-10 mt--1 translate-y--1/2 select-none bg-opacity-75 text-[11px]"
-        >
+        <div className="wave_duration pointer-events-none absolute right-0 top-1/2 mt--1 translate-y--1/2 select-none bg-opacity-75 text-[11px]">
           {!isLoading && songDuration}
         </div>
         <div id="hover"></div>

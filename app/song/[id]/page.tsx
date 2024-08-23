@@ -5,10 +5,9 @@ import SongContent from "./components/SongContent";
 
 import getSongById from "@/actions/getSongById";
 
-export const revalidate = 0;
-
 const Song = async ({ params }: { params: { id: string } }) => {
   const { id } = params;
+
   const song = await getSongById(id);
 
   if (!song) {
