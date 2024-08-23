@@ -37,7 +37,7 @@ const EQBars = () => {
     const HEIGHT = canvasOne.height;
 
     const analyser = audioCtx.createAnalyser();
-    const stream = (mediaElement as any)?.captureStream();
+    const stream = (mediaElement as any)?.mozCaptureStream();
 
     if (!stream) {
       return;
