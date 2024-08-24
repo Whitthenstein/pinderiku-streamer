@@ -5,10 +5,9 @@ import SongContent from "./components/SongContent";
 
 import getSongById from "@/actions/getSongById";
 
-export const revalidate = 0;
-
 const Song = async ({ params }: { params: { id: string } }) => {
   const { id } = params;
+
   const song = await getSongById(id);
 
   if (!song) {
@@ -16,11 +15,11 @@ const Song = async ({ params }: { params: { id: string } }) => {
   }
 
   return (
-    <div className="bg-neutral-900 rounded-lg h-full w-full overflow-hidden overflow-y-auto ">
-      <Header className="from-bg-neutral-900">
-        <div className="mb-2 flex flex-col gap-y-6">
-          <h1 className="text-white text-3xl font-semibold">{song.title}</h1>
-          <h2 className="text-white text-lg font-semibold">{song.author}</h2>
+    <div className="h-full w-full overflow-hidden overflow-y-auto rounded-lg bg-neutral-900">
+      <Header className="">
+        <div className="mb-2 flex flex-col items-center justify-center gap-y-6">
+          <h1 className="text-5xl font-bold text-white">{song.title}</h1>
+          <h2 className="text-lg font-semibold text-white">{song.author}</h2>
         </div>
       </Header>
       <SongContent song={song} />

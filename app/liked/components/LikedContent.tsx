@@ -28,34 +28,16 @@ const LikedContent: React.FC<LikedContentProps> = ({ songs }) => {
 
   if (songs.length === 0) {
     return (
-      <div
-        className="
-            flex
-            flex-col
-            gap-y-2
-            w-full
-            px-6
-            text-neutral-400
-        "
-      >
-        No liked songs.
-      </div>
+      <div className="flex w-full flex-col gap-y-2 px-6 text-neutral-400">No liked songs.</div>
     );
   }
 
   return (
-    <div
-      className="
-        flex
-        flex-col
-        gap-y-2
-        w-full p-6
-      "
-    >
+    <div className="flex w-full flex-col gap-y-2 p-6">
       {songs.map((song) => (
         <div
           key={song.id}
-          className="flex items-center gap-x-4 w-full"
+          className="flex w-full items-center gap-x-4"
         >
           <div className="flex-1">
             <MediaItem

@@ -3,6 +3,7 @@ import WaveSurfer from "wavesurfer.js";
 import { create } from "zustand";
 
 import usePlaylist from "./usePlaylist";
+import { RefObject } from "react";
 
 interface PlayerStore {
   // attributes
@@ -41,6 +42,7 @@ const usePlayer = create<PlayerStore>((set) => ({
   setMedia: (newMedia: HTMLAudioElement) => {
     set({ media: newMedia });
   },
+
   setSongs: (songs: SongsMap) => {
     set({ songs });
   },
@@ -68,9 +70,7 @@ const usePlayer = create<PlayerStore>((set) => ({
   getSongsArray: (receivedSongsMap?: SongsMap) => {
     const state = usePlayer.getState() as PlayerStore;
 
-    return Array.from(
-      receivedSongsMap ? receivedSongsMap.values() : state.songs.values()
-    );
+    return Array.from(receivedSongsMap ? receivedSongsMap.values() : state.songs.values());
   },
   getCurrentSong: () => {
     const state = usePlayer.getState() as PlayerStore;

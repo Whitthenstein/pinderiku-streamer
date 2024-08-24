@@ -2,7 +2,6 @@
   position: absolute;
   left: 0;
   top: 0;
-  z-index: 10;
   pointer-events: none;
   height: 100%;
   width: 0;
@@ -10,31 +9,68 @@
   background: rgba(255, 255, 255, 0.8);
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
+  z-index: 1;
 }
 #waveform:hover #hover {
   opacity: 1;
 }
 
-#waveform ::part(cursor) {
-  width: 2px;
-  //   top: -1px;
-  border-radius: 3px;
-  height: 2.4rem;
+#waveform ::part(cursor),
+#song_wave ::part(cursor) {
   background-color: #065f46;
-  border: 1px solid;
-
   animation: my-move 3s infinite linear;
 }
 
-#time,
-#duration {
-  text-shadow: 1px 1px 0 #000, -1px 1px 0 #000, 1px -1px 0 #000,
-    -1px -1px 0 #000, 0px 1px 0 #000, 0px -1px 0 #000, -1px 0px 0 #000,
-    1px 0px 0 #000, 2px 2px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000,
-    -2px -2px 0 #000, 0px 2px 0 #000, 0px -2px 0 #000, -2px 0px 0 #000,
-    2px 0px 0 #000, 1px 2px 0 #000, -1px 2px 0 #000, 1px -2px 0 #000,
-    -1px -2px 0 #000, 2px 1px 0 #000, -2px 1px 0 #000, 2px -1px 0 #000,
+#waveform ::part(cursor) {
+  width: 2px;
+  border-radius: 3px;
+  height: 2.4rem;
+  border: 1px solid;
+}
+
+#song_wave ::part(cursor) {
+  width: 3px !important;
+  border-radius: 3px;
+  // height: 7.6rem;
+  height: 8rem;
+  // border: 2px solid;
+}
+
+#waveform ::part(wrapper),
+#song_wave_1 ::part(wrapper),
+#song_wave_2 ::part(wrapper) {
+  z-index: 0;
+}
+
+.wave_time,
+.wave_duration {
+  text-shadow:
+    1px 1px 0 #000,
+    -1px 1px 0 #000,
+    1px -1px 0 #000,
+    -1px -1px 0 #000,
+    0px 1px 0 #000,
+    0px -1px 0 #000,
+    -1px 0px 0 #000,
+    1px 0px 0 #000,
+    2px 2px 0 #000,
+    -2px 2px 0 #000,
+    2px -2px 0 #000,
+    -2px -2px 0 #000,
+    0px 2px 0 #000,
+    0px -2px 0 #000,
+    -2px 0px 0 #000,
+    2px 0px 0 #000,
+    1px 2px 0 #000,
+    -1px 2px 0 #000,
+    1px -2px 0 #000,
+    -1px -2px 0 #000,
+    2px 1px 0 #000,
+    -2px 1px 0 #000,
+    2px -1px 0 #000,
     -2px -1px 0 #000;
+
+  z-index: 2;
 }
 
 .fade-animation {

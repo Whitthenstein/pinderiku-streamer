@@ -3,28 +3,23 @@ import { useEffect, useState } from "react";
 import usePlayer from "@/hooks/usePlayer";
 
 import WaveformLoader from "./WaveformLoader";
+import usePlaylist from "@/hooks/usePlaylist";
 
 const EQBars = () => {
-  const { getIsLoading, getMedia } = usePlayer((state) => state);
-  const isLoading = getIsLoading();
-  const mediaElement = getMedia();
+  const { isLoading, media: mediaElement, waveform } = usePlayer((state) => state);
+  const { getCurrentSongId } = usePlaylist((state) => state);
+  const currentSongId = getCurrentSongId();
+  const isPlaying = waveform?.isPlaying();
 
-  const [eqLoaderElement, setEqLoaderElement] = useState<HTMLElement | null>(
-    null
-  );
-  const [canvasContainer, setCanvasContainer] = useState<HTMLElement | null>(
-    null
-  );
+  const [eqLoaderElement, setEqLoaderElement] = useState<HTMLElement | null>(null);
+  const [canvasContainer, setCanvasContainer] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
-    const renderedCanvasContainer =
-      document.getElementById("canvas-container")!;
+    const renderedCanvasContainer = document.getElementById("canvas-container")!;
 
     setCanvasContainer(renderedCanvasContainer);
 
-    const eqLoader = document.getElementById(
-      "eq-loader"
-    ) as HTMLProgressElement;
+    const eqLoader = document.getElementById("eq-loader") as HTMLProgressElement;
 
     setEqLoaderElement(eqLoader);
   }, []);
@@ -35,9 +30,7 @@ const EQBars = () => {
     }
     const audioCtx = new AudioContext();
 
-    const [canvasOne, canvasTwo] = Array.from(
-      canvasContainer.children
-    ) as HTMLCanvasElement[];
+    const [canvasOne, canvasTwo] = Array.from(canvasContainer.children) as HTMLCanvasElement[];
 
     const canvasCtxOne = canvasOne!.getContext("2d");
     const canvasCtxTwo = canvasTwo!.getContext("2d");
@@ -92,7 +85,7 @@ const EQBars = () => {
 
     draw();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading, canvasContainer, mediaElement]);
+  }, [isLoading, canvasContainer, mediaElement, currentSongId, isPlaying]);
 
   useEffect(() => {
     eqLoaderElement?.classList.toggle("fade");
@@ -102,7 +95,7 @@ const EQBars = () => {
   }, [isLoading]);
 
   return (
-    <div className="relative w-full h-full items-center justify-center">
+    <div className="relative h-full w-full items-center justify-center">
       <WaveformLoader id="eq-loader" />
       <div
         id="canvas-container"
@@ -114,7 +107,7 @@ const EQBars = () => {
         />
         <canvas
           id="eq-bars-2"
-          className="absolute top-[45px] h-[30px] w-full transform -scale-y-100"
+          className="absolute top-[45px] h-[30px] w-full -scale-y-100 transform"
         />
       </div>
     </div>

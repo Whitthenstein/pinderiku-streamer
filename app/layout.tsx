@@ -9,9 +9,9 @@ import Player from "@/components/Player";
 import ToasterProvider from "@/providers/ToasterProvider";
 import ModalProvider from "@/providers/ModalProvider";
 import UserProvider from "@/providers/UserProvider";
-import SupabaseProvider from "@/providers/SupabaseProvider";
 
 import "@/styles/globals.scss";
+import SupabaseProvider from "@/providers/SupabaseProvider";
 
 const font = Lato({ weight: "400", subsets: ["latin"] });
 

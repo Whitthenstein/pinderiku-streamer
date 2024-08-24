@@ -21,8 +21,8 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ children, songs }) => {
-  const { getWaveform } = usePlayer((state) => state);
-  const waveform = getWaveform();
+  const { getCurrentSong } = usePlayer((state) => state);
+  const currentSong = getCurrentSong();
 
   const pathname = usePathname();
   const routes = useMemo(
@@ -43,27 +43,8 @@ const Sidebar: React.FC<SidebarProps> = ({ children, songs }) => {
     [pathname]
   );
   return (
-    <div
-      className={twMerge(
-        `
-      flex
-      h-full
-    `,
-        waveform?.isPlaying() && "h-[calc(100%-88px)]"
-      )}
-    >
-      <div
-        className="
-            hidden 
-            md:flex 
-            flex-col 
-            gap-y-2 
-            bg-black 
-            h-full 
-            w-[300px] 
-            p-2 
-            "
-      >
+    <div className={twMerge(`flex h-full`, currentSong && "h-[calc(100%-88px)]")}>
+      <div className="hidden h-full w-[300px] flex-col gap-y-2 bg-black p-2 md:flex">
         <Box>
           <div className="flex flex-col gap-y-4 px-5 py-4">
             {routes.map((item) => (
@@ -74,7 +55,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children, songs }) => {
             ))}
           </div>
         </Box>
-        <Box className="overflow-y-auto h-full">
+        <Box className="h-full overflow-y-auto">
           <Library songs={songs} />
         </Box>
       </div>

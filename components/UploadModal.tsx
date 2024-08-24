@@ -66,13 +66,12 @@ const UploadModal = () => {
       }
 
       // upload image
-      const { data: imageData, error: imageError } =
-        await supabaseClient.storage
-          .from("images")
-          .upload(`image-${values.title}-${uniqueId}`, imageFile, {
-            cacheControl: "3600",
-            upsert: false
-          });
+      const { data: imageData, error: imageError } = await supabaseClient.storage
+        .from("images")
+        .upload(`image-${values.title}-${uniqueId}`, imageFile, {
+          cacheControl: "3600",
+          upsert: false
+        });
 
       if (imageError) {
         setIsLoading(false);
@@ -80,15 +79,13 @@ const UploadModal = () => {
         return toast.error("Failed image upload.");
       }
 
-      const { error: supabaseError } = await supabaseClient
-        .from("songs")
-        .insert({
-          user_id: user.id,
-          title: values.title,
-          author: values.author,
-          image_path: imageData.path,
-          song_path: songData.path
-        });
+      const { error: supabaseError } = await supabaseClient.from("songs").insert({
+        user_id: user.id,
+        title: values.title,
+        author: values.author,
+        image_path: imageData.path,
+        song_path: songData.path
+      });
 
       if (supabaseError) {
         setIsLoading(false);

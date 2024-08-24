@@ -3,8 +3,9 @@ import usePlaylist, { REPEAT_VALUES } from "./usePlaylist";
 import useLoadSongUrl from "./useLoadSongsUrls";
 
 const usePlay = () => {
-  const { getSongById, setIsLoading, getSongsArray, getWaveform, getMedia } =
-    usePlayer((state) => state);
+  const { getSongById, setIsLoading, getSongsArray, getWaveform, getMedia } = usePlayer(
+    (state) => state
+  );
   const {
     getCurrentSongId,
     setPlaylist,

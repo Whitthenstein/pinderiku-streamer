@@ -13,14 +13,7 @@ import {
   BsFillSkipForwardFill
 } from "react-icons/bs";
 
-import {
-  LuVolume,
-  LuVolume1,
-  LuVolume2,
-  LuVolumeX,
-  LuRepeat,
-  LuRepeat1
-} from "react-icons/lu";
+import { LuVolume, LuVolume1, LuVolume2, LuVolumeX, LuRepeat, LuRepeat1 } from "react-icons/lu";
 
 import usePlayer from "@/hooks/usePlayer";
 
@@ -78,8 +71,9 @@ const getVolumeIcon = (volume: number) => {
 };
 
 const PlayerContent = () => {
-  const { getIsLoading, getCurrentSong, getWaveform, getMedia, getSongs } =
-    usePlayer((state) => state);
+  const { getIsLoading, getCurrentSong, getWaveform, getMedia, getSongs } = usePlayer(
+    (state) => state
+  );
   const currentSong = getCurrentSong();
   const isLoading = getIsLoading();
   const waveform = getWaveform();
@@ -106,8 +100,6 @@ const PlayerContent = () => {
     } else {
       audioMedia.pause();
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   };
 
   const handlePrevious = () => {
@@ -170,43 +162,18 @@ const PlayerContent = () => {
   };
 
   return (
-    <div className="flex items-center w-full flex-col h-full">
-      <div className="grid grid-cols-2 md:grid-cols-5 h-full w-full px-4">
-        <div
-          className="
-        flex
-        w-full
-        justify-start
-        gap-4
-        "
-        >
-          <div className="flex items-center w-3/4 gap-x-4">
+    <div className="flex h-full w-full flex-col items-center">
+      <div className="grid h-full w-full grid-cols-2 px-4 md:grid-cols-5">
+        <div className="flex w-full justify-start gap-4">
+          <div className="flex w-3/4 items-center gap-x-4">
             {currentSong && <MediaItem song={currentSong} />}
             {currentSong && <LikeButton songId={currentSong.id} />}
           </div>
         </div>
-        <div
-          className="
-        flex
-        md:hidden
-        col-auto
-        justify-end
-        items-center
-      "
-        >
+        <div className="col-auto flex items-center justify-end md:hidden">
           <div
             onClick={handlePlay}
-            className="
-            h-10
-            w-10
-            flex
-            items-center
-            justify-center
-            rounded-full
-            bg-white
-            p-1
-            cursor-pointer
-        "
+            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white p-1"
           >
             {isLoading ? (
               <ScaleLoader
@@ -222,55 +189,23 @@ const PlayerContent = () => {
             )}
           </div>
         </div>
-        <div className="hidden md:flex items-center gap-x-4">
+        <div className="hidden items-center gap-x-4 md:flex">
           <Wave setIsPlaying={setIsPlaying} />
         </div>
-        <div
-          className="
-        hidden
-        h-full
-        md:flex
-        justify-center
-        items-center
-        w-full
-        gap-x-6
-      "
-        >
+        <div className="hidden h-full w-full items-center justify-center gap-x-6 md:flex">
           <BsFillSkipStartFill
             onClick={handlePrevious}
             size={20}
-            className="
-            text-neutral-400
-            cursor-pointer
-            hover:text-white
-            transition
-
-        "
+            className="cursor-pointer text-neutral-400 transition hover:text-white"
           />
           <BsFillSkipBackwardFill
             onClick={handleBackward}
             size={25}
-            className="
-            text-neutral-400
-            cursor-pointer
-            hover:text-white
-            transition
-
-        "
+            className="cursor-pointer text-neutral-400 transition hover:text-white"
           />
           <div
             onClick={handlePlay}
-            className="
-            flex
-            items-center
-            justify-center
-            h-10
-            w-10
-            rounded-full
-            bg-white
-            p-1
-            cursor-pointer
-        "
+            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white p-1"
           >
             {isLoading ? (
               <ScaleLoader
@@ -289,30 +224,20 @@ const PlayerContent = () => {
           <BsFillSkipForwardFill
             onClick={handleForward}
             size={25}
-            className="
-              text-neutral-400
-              cursor-pointer
-              hover:text-white
-              transition
-            "
+            className="cursor-pointer text-neutral-400 transition hover:text-white"
           />
           <BsFillSkipEndFill
             onClick={handleNext}
             size={20}
-            className="
-              text-neutral-400
-              cursor-pointer
-              hover:text-white
-              transition
-            "
+            className="cursor-pointer text-neutral-400 transition hover:text-white"
           />
         </div>
         {/* EQ Bars */}
-        <div className="hidden md:flex w-full h-full items-center">
+        <div className="hidden h-full w-full items-center md:flex">
           <EQBars />
         </div>
-        <div className="hidden md:flex w-full justify-end pr-2">
-          <div className="flex items-center gap-x-2 w-[120px]">
+        <div className="hidden w-full justify-end pr-2 md:flex">
+          <div className="flex w-[120px] items-center gap-x-2">
             {getRepeatIcon(repeatValue, toggleRepeat)}
             <VolumeIcon
               onClick={toggleMute}

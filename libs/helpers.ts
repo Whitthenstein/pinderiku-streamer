@@ -17,6 +17,10 @@ export const toDateTime = (secs: number) => {
   return t;
 };
 
+export const updateTime = (timeEl: Element | null, mediaToUse: HTMLAudioElement) => () => {
+  timeEl!.textContent = formatTime(mediaToUse!.currentTime);
+};
+
 export const formatTime = (seconds: number) => {
   const minutes = Math.floor(Math.round(seconds) / 60);
   const secondsRemainder = Math.round(seconds) % 60;

@@ -36,10 +36,10 @@ export const Library: React.FC<LibraryProps> = ({ songs }) => {
             className="text-neutral-400"
             size={26}
           />
-          <p className="text-neutral-400 font-medium text-md">Library</p>
+          <p className="text-md font-medium text-neutral-400">Library</p>
         </div>
       </div>
-      <div className="flex flex-col gap-y-1 mt-4 px-3">
+      <div className="mt-4 flex flex-col gap-y-1 px-3">
         {songsArray.map((song) => (
           <AnimatedBorderContainer
             key={song.id}

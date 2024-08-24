@@ -4,12 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import useLoadImage from "@/hooks/useLoadImage";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 import { Song } from "@/types";
 
@@ -31,18 +26,9 @@ const MediaItem: React.FC<MediaItemProps> = ({ song, onClick }) => {
     <Link
       href={`/song/${song.id}`}
       onClick={handleClick}
-      className="flex items-center gap-x-3 cursor-pointer hover:bg-neutral-800 w-full h-full p-2 rounded-md"
+      className="flex h-full w-full cursor-pointer items-center gap-x-3 rounded-md p-2 hover:bg-neutral-800"
     >
-      <div
-        className="
-          relative
-          rounded-md
-          min-hl
-          min-h-[48px]
-          min-w-[48px]
-          overflow-hidden
-        "
-      >
+      <div className="min-hl relative min-h-[48px] min-w-[48px] overflow-hidden rounded-md">
         <Image
           fill
           src={imageUrl || "/img/liked.png"}
@@ -55,15 +41,15 @@ const MediaItem: React.FC<MediaItemProps> = ({ song, onClick }) => {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
-              <p className="text-white truncate">{song.title}</p>
+              <p className="truncate text-white">{song.title}</p>
             </TooltipTrigger>
-            <TooltipContent className="border-none text-white bg-neutral-900">
+            <TooltipContent className="border-none bg-neutral-900 text-white">
               <p>{song.title}</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
 
-        <p className="text-neutral-400 text-sm truncate">{song.author}</p>
+        <p className="truncate text-sm text-neutral-400">{song.author}</p>
       </div>
     </Link>
   );

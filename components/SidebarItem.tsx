@@ -10,36 +10,17 @@ interface SidebarItemProps {
   href: string;
 }
 
-export const SidebarItem: React.FC<SidebarItemProps> = ({
-  icon: Icon,
-  label,
-  active,
-  href
-}) => {
+export const SidebarItem: React.FC<SidebarItemProps> = ({ icon: Icon, label, active, href }) => {
   return (
     <Link
       href={href}
       className={twMerge(
-        `
-    flex
-    flex-row
-    h-auto
-    items-center
-    w-full
-    gap-x-4
-    text-md
-    font-medium
-    cursor-pointer
-    hover:text-white
-    transition
-    text-neutral-400
-    py-1
-  `,
+        `text-md flex h-auto w-full cursor-pointer flex-row items-center gap-x-4 py-1 font-medium text-neutral-400 transition hover:text-white`,
         active && "text-white"
       )}
     >
       <Icon size={26} />
-      <p className="truncate w-full">{label}</p>
+      <p className="w-full truncate">{label}</p>
     </Link>
   );
 };

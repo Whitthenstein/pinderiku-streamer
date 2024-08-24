@@ -4,10 +4,10 @@ interface WaveformLoaderProps {
 
 const WaveformLoader: React.FC<WaveformLoaderProps> = ({ id }) => {
   return (
-    <div className="absolute items-center justify-center w-1/2 right-1/4 top-1/2">
+    <div className="absolute right-1/4 top-1/2 w-1/2 items-center justify-center">
       <div
         id={id}
-        className=" bg-emerald-600 animate-ping fade-animation h-2 rounded pointer-events-none select-none"
+        className="fade-animation pointer-events-none h-2 animate-ping select-none rounded bg-emerald-600"
       />
     </div>
   );
