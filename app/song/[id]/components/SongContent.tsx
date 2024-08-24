@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import React, { memo, useEffect, useRef, useState } from "react";
@@ -10,10 +11,11 @@ import useLoadSongUrl from "@/hooks/useLoadSongsUrls";
 import WaveSurfer from "wavesurfer.js";
 import { generateElementsForWavesurfer } from "@/libs/waveSurferHelper";
 import usePlaylist from "@/hooks/usePlaylist";
-import { formatTime, updateTime } from "@/libs/helpers";
+import usePlay from "@/hooks/usePlay";
+import { formatTime } from "@/libs/helpers";
 import usePlayer from "@/hooks/usePlayer";
-import WaveSurferPlayer from "@/components/WaveSurferPlayer";
 import { cn } from "@/libs/utils";
+import { FaPlay } from "react-icons/fa";
 
 interface SongContentProps {
   song: Song;
@@ -21,10 +23,10 @@ interface SongContentProps {
 
 const SongContent: React.FC<SongContentProps> = memo(function SongContentBase({ song }) {
   const { onOpen, isOpen } = useSongImageModal((state) => state);
-  const { getCurrentSongId, currentSongIndex } = usePlaylist((state) => state);
-  const { getMedia } = usePlayer((state) => state);
+  const { getCurrentSongId } = usePlaylist((state) => state);
+  const { playSong } = usePlay();
+  const { media, setIsLoading } = usePlayer((state) => state);
   const { getSongImagePublicUrl, getSongPublicUrl } = useLoadSongUrl();
-  // const containerRef = useRef<HTMLDivElement>(null);
 
   const [songDuration, setSongDuration] = useState("0:00");
   const [currentTime, setCurrentTime] = useState("0:00");
@@ -35,11 +37,6 @@ const SongContent: React.FC<SongContentProps> = memo(function SongContentBase({ 
   const songUrl = getSongPublicUrl(song.song_path);
 
   useEffect(() => {
-    // if (waveRef.current) {
-    //   waveRef.current.setMediaElement(new Audio());
-    //   waveRef.current.destroy();
-    //   setCurrentTime("0:00");
-    // }
     const { gradient, progressGradient, hoverPlugin } = generateElementsForWavesurfer(document);
 
     // create two wavesurfer instances to be placed on the page
@@ -48,9 +45,9 @@ const SongContent: React.FC<SongContentProps> = memo(function SongContentBase({ 
     const wsArray = [
       new WaveSurfer({
         container: "#song_wave_1",
-        media: getMedia()!,
+        media: media!,
         peaks: song.peak_data,
-        url: undefined,
+        url: songUrl,
         waveColor: gradient,
         progressColor: progressGradient,
         cursorColor: undefined,
@@ -77,12 +74,12 @@ const SongContent: React.FC<SongContentProps> = memo(function SongContentBase({ 
         barWidth: 4,
         barGap: 2,
         barRadius: 2,
-        dragToSeek: true,
-        plugins: [hoverPlugin]
+        dragToSeek: false,
+        interact: false
       })
     ];
 
-    const hover = document.querySelector("#song_wave_hover_1") as HTMLElement; // Hover effect
+    const hover = document.querySelector("#song_wave_hover") as HTMLElement; // Hover effect
     const waveform = document.querySelector("#song_wave_1") as HTMLElement;
 
     waveform.addEventListener("pointermove", (e: any) => {
@@ -95,8 +92,6 @@ const SongContent: React.FC<SongContentProps> = memo(function SongContentBase({ 
       });
 
       ws.on("audioprocess", () => setCurrentTime(formatTime(ws.getCurrentTime())));
-
-      // waveRef.current = ws;
     }
 
     // add custom cursor animation to shadowDOM
@@ -126,7 +121,7 @@ const SongContent: React.FC<SongContentProps> = memo(function SongContentBase({ 
       songNotInPlayerWs?.classList.add("hidden");
       songInPlayerWs?.classList.remove("hidden");
     }
-  }, [currentSongIndex]);
+  }, [isSongInPlayer]);
 
   if (!song) {
     return null;
@@ -136,6 +131,12 @@ const SongContent: React.FC<SongContentProps> = memo(function SongContentBase({ 
     if (!isOpen) {
       onOpen();
     }
+  };
+
+  const handlePlaySong = () => {
+    playSong(song.id);
+
+    !currentSongId && setIsLoading(false);
   };
 
   return (
@@ -153,7 +154,7 @@ const SongContent: React.FC<SongContentProps> = memo(function SongContentBase({ 
             {songDuration}
           </div>
           <div
-            id="song_wave_hover_1"
+            id="song_wave_hover"
             className="song_wave_hover"
           ></div>
         </div>
@@ -167,10 +168,16 @@ const SongContent: React.FC<SongContentProps> = memo(function SongContentBase({ 
           <div className="wave_duration pointer-events-none absolute right-0 top-1/2 mt--1 translate-y--1/2 select-none bg-opacity-75 text-[11px]">
             {songDuration}
           </div>
-          <div
-            id="song_wave_hover_2"
-            className="song_wave_hover"
-          ></div>
+          <div className="group/play absolute z-[2] h-[125px] w-[calc(100%-2rem)]">
+            <div className="relative bottom-[-32%] right-[-50%] z-[2] w-fit opacity-0 transition hover:scale-110 group-hover/play:opacity-100">
+              <button
+                onClick={handlePlaySong}
+                className="rounded-full bg-white p-4"
+              >
+                <FaPlay className="text-black" />
+              </button>
+            </div>
+          </div>
         </div>
       </div>
       <div className="relative h-[250px] w-[250px] cursor-pointer">

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import WaveSurfer from "wavesurfer.js";
 
 import usePlayer from "@/hooks/usePlayer";
@@ -7,19 +7,13 @@ import WaveformLoader from "./WaveformLoader";
 import usePlay from "@/hooks/usePlay";
 import { generateElementsForWavesurfer } from "@/libs/waveSurferHelper";
 import { formatTime } from "@/libs/helpers";
-import HoverPlugin from "wavesurfer.js/dist/plugins/hover.js";
-import WaveSurferPlayer from "./WaveSurferPlayer";
 
 interface WaveProps {
   setIsPlaying: (value: boolean) => void;
 }
 
 const Wave: React.FC<WaveProps> = ({ setIsPlaying }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { getIsLoading, setIsLoading, setMedia, getCurrentSong, setWaveform, setRef } = usePlayer(
-    (state) => state
-  );
-  const isLoading = getIsLoading();
+  const { isLoading, setIsLoading, setMedia, setWaveform } = usePlayer((state) => state);
 
   const { onFinish } = usePlay();
   const [waveformElement, setWaveformElement] = useState<HTMLElement | null>(null);
@@ -27,22 +21,8 @@ const Wave: React.FC<WaveProps> = ({ setIsPlaying }) => {
   const [songDuration, setSongDuration] = useState("0:00");
 
   useEffect(() => {
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-
-    // // Define the waveform gradient
-    const gradient = ctx!.createLinearGradient(0, 0, 0, 50);
-    gradient.addColorStop(0, "#bbbbbb"); // Top color
-    gradient.addColorStop(0.6, "#777777");
-    gradient.addColorStop(1, "#bbbbbb"); // Bottom color
-
-    // Define the progress gradient
-    const progressGradient = ctx!.createLinearGradient(0, 0, 0, 50);
-    progressGradient.addColorStop(0, "#059669"); // Top color
-    progressGradient.addColorStop(0.6, "#065f46");
-    progressGradient.addColorStop(1, "#059669"); // Bottom color
-    const audioMedia = new Audio();
-    audioMedia.crossOrigin = "anonymous"; //necessary to capture stream while it's loading
+    const { audioMedia, gradient, progressGradient, hoverPlugin } =
+      generateElementsForWavesurfer(document);
 
     const wavesurfer = WaveSurfer.create({
       container: "#waveform",
@@ -57,15 +37,7 @@ const Wave: React.FC<WaveProps> = ({ setIsPlaying }) => {
       barGap: 2,
       barRadius: 2,
       dragToSeek: true,
-      plugins: [
-        HoverPlugin.create({
-          lineColor: "#16a34a",
-          lineWidth: 3,
-          labelBackground: "#222",
-          labelColor: "#fff",
-          labelSize: "11px"
-        })
-      ]
+      plugins: [hoverPlugin]
     });
 
     const hover = document.querySelector("#hover") as HTMLElement; // Hover effect
@@ -107,7 +79,6 @@ const Wave: React.FC<WaveProps> = ({ setIsPlaying }) => {
 
     setWaveform(wavesurfer);
     setMedia(audioMedia);
-    setRef(containerRef);
 
     // add custom cursor animation to shadowDOM
     const host = waveform.children[3];
@@ -142,7 +113,6 @@ const Wave: React.FC<WaveProps> = ({ setIsPlaying }) => {
     >
       <WaveformLoader id="waveform-loader" />
       <div
-        ref={containerRef}
         id="waveform"
         className="fade-animation fade cursor-pointer"
       >

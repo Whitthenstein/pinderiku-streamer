@@ -3,11 +3,13 @@ import { useEffect, useState } from "react";
 import usePlayer from "@/hooks/usePlayer";
 
 import WaveformLoader from "./WaveformLoader";
+import usePlaylist from "@/hooks/usePlaylist";
 
 const EQBars = () => {
-  const { getIsLoading, getMedia } = usePlayer((state) => state);
-  const isLoading = getIsLoading();
-  const mediaElement = getMedia();
+  const { isLoading, media: mediaElement, waveform } = usePlayer((state) => state);
+  const { getCurrentSongId } = usePlaylist((state) => state);
+  const currentSongId = getCurrentSongId();
+  const isPlaying = waveform?.isPlaying();
 
   const [eqLoaderElement, setEqLoaderElement] = useState<HTMLElement | null>(null);
   const [canvasContainer, setCanvasContainer] = useState<HTMLElement | null>(null);
@@ -83,7 +85,7 @@ const EQBars = () => {
 
     draw();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading, canvasContainer, mediaElement]);
+  }, [isLoading, canvasContainer, mediaElement, currentSongId, isPlaying]);
 
   useEffect(() => {
     eqLoaderElement?.classList.toggle("fade");

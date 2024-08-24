@@ -1,5 +1,4 @@
-#hover,
-.song_wave_hover {
+#hover {
   position: absolute;
   left: 0;
   top: 0;
@@ -10,6 +9,7 @@
   background: rgba(255, 255, 255, 0.8);
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
+  z-index: 1;
 }
 #waveform:hover #hover {
   opacity: 1;
