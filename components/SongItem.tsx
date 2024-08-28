@@ -49,7 +49,7 @@ const SongItem: React.FC<SongItemProps> = ({ song }) => {
               <TooltipTrigger className="flex w-full p-0">
                 <p className="truncate font-semibold text-white">{song.title}</p>
               </TooltipTrigger>
-              <TooltipContent className="border-none bg-neutral-900 text-white">
+              <TooltipContent className="border-none bg-[var(--primary-background-color-var)] text-white">
                 <p>{song.title}</p>
               </TooltipContent>
             </Tooltip>

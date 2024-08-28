@@ -4,6 +4,7 @@ import usePlayer from "@/hooks/usePlayer";
 
 import WaveformLoader from "./WaveformLoader";
 import usePlaylist from "@/hooks/usePlaylist";
+import { getCSSVariableValue } from "@/libs/helpers";
 
 const EQBars = () => {
   const { isLoading, media: mediaElement, waveform } = usePlayer((state) => state);
@@ -59,16 +60,18 @@ const EQBars = () => {
     canvasCtxOne!.clearRect(0, 0, WIDTH, HEIGHT);
     canvasCtxTwo!.clearRect(0, 0, WIDTH, HEIGHT);
 
+    const fillStyle = getCSSVariableValue("--primary-dominant-color-var", window, document);
+
     function draw() {
       requestAnimationFrame(draw);
 
       analyser.getByteFrequencyData(dataArray);
 
       canvasCtxOne!.clearRect(0, 0, WIDTH, HEIGHT);
-      canvasCtxOne!.fillStyle = "#059669";
+      canvasCtxOne!.fillStyle = fillStyle;
 
       canvasCtxTwo!.clearRect(0, 0, WIDTH, HEIGHT);
-      canvasCtxTwo!.fillStyle = "#059669";
+      canvasCtxTwo!.fillStyle = fillStyle;
 
       let bar_x;
       let bar_width;

@@ -21,7 +21,7 @@ const AnimatedBorderContainer: React.FC<AnimatedBorderContainerProps> = ({
     >
       <div
         className={
-          "absolute left-[3px] top-[3px] h-[calc(100%-6px)] w-[calc(100%-6px)] rounded-md bg-neutral-900"
+          "absolute left-[3px] top-[3px] h-[calc(100%-6px)] w-[calc(100%-6px)] rounded-md bg-[var(--primary-background-color-var)]"
         }
       >
         {children}

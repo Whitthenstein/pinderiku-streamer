@@ -24,7 +24,7 @@ const SongImageModal: React.FC<SongImageModalProps> = ({ songImageUrl }) => {
       onChange={onChange}
     >
       <Card
-        className="group z-20 flex h-fit w-full flex-row items-center justify-center gap-x-4 overflow-hidden border-none bg-neutral-400/5 p-3 transition hover:bg-neutral-400/10"
+        className="group z-20 mt-4 flex h-fit w-full flex-row items-center justify-center gap-x-4 overflow-hidden border-none bg-neutral-400/5 p-3 transition hover:bg-neutral-400/10"
         data-testid="song-card"
       >
         <CardContent className="relative aspect-square h-full w-full overflow-hidden rounded-lg">

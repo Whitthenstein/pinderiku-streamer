@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import React, { memo, useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 
 import { Song } from "@/types";
 import SongImageModal from "@/components/SongImageModal";
@@ -99,13 +99,13 @@ const SongContent: React.FC<SongContentProps> = memo(function SongContentBase({ 
     var style = document.createElement("style");
     style.innerHTML = `@keyframes my-move {
                           0% {
-                            border-color: #059669;
+                            border-color: var(--secondary-dominant-color-var);
                           }
                           50% {
-                            border-color: #34d399;
+                            border-color: var(--tertiary-dominant-color-var);
                           }
                           100% {
-                            border-color: #059669;
+                            border-color: var(--secondary-dominant-color-var);
                           }
                         }`;
     host.shadowRoot?.appendChild(style);

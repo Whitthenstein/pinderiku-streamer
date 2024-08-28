@@ -31,8 +31,8 @@ const AuthModal = () => {
 
   return (
     <Modal
-      title="Welcome back"
-      description="Login to your account"
+      title="Welcome"
+      description="Log in to your account"
       isOpen={isOpen}
       onChange={onChange}
     >
@@ -42,13 +42,25 @@ const AuthModal = () => {
         providers={["github", "google"]}
         supabaseClient={supabaseClient}
         view={view}
+        localization={{
+          variables: {
+            sign_in: {
+              button_label: "Log in",
+              social_provider_text: "Log in with {{provider}}",
+              link_text: "Already have an account? Log in"
+            },
+            sign_up: {
+              social_provider_text: "Log in with {{provider}}"
+            }
+          }
+        }}
         appearance={{
           theme: ThemeSupa,
           variables: {
             default: {
               colors: {
                 brand: "#404040",
-                brandAccent: "#22c55e"
+                brandAccent: "white"
               }
             }
           }

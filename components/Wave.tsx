@@ -6,7 +6,7 @@ import usePlayer from "@/hooks/usePlayer";
 import WaveformLoader from "./WaveformLoader";
 import usePlay from "@/hooks/usePlay";
 import { generateElementsForWavesurfer } from "@/libs/waveSurferHelper";
-import { formatTime } from "@/libs/helpers";
+import { formatTime, getCSSVariableValue } from "@/libs/helpers";
 
 interface WaveProps {
   setIsPlaying: (value: boolean) => void;
@@ -83,15 +83,16 @@ const Wave: React.FC<WaveProps> = ({ setIsPlaying }) => {
     // add custom cursor animation to shadowDOM
     const host = waveform.children[3];
     var style = document.createElement("style");
+
     style.innerHTML = `@keyframes my-move {
                           0% {
-                            border-color: #059669;
+                            border-color: var(--secondary-dominant-color-var);
                           }
                           50% {
-                            border-color: #34d399;
+                            border-color: var(--tertiary-dominant-color-var);
                           }
                           100% {
-                            border-color: #059669;
+                            border-color: var(--secondary-dominant-color-var);
                           }
                         }`;
     host.shadowRoot?.appendChild(style);

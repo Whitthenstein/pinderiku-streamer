@@ -15,7 +15,7 @@ const Song = async ({ params }: { params: { id: string } }) => {
   }
 
   return (
-    <div className="h-full w-full overflow-hidden overflow-y-auto rounded-lg bg-neutral-900">
+    <div className="h-full w-full overflow-hidden overflow-y-auto rounded-lg bg-[var(--primary-background-color-var)]">
       <Header className="">
         <div className="mb-2 flex flex-col items-center justify-center gap-y-6">
           <h1 className="text-5xl font-bold text-white">{song.title}</h1>

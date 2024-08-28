@@ -28,6 +28,7 @@ const SearchInput = () => {
 
   return (
     <Input
+      className="bg-[var(--primary-background-color-var)]"
       placeholder="What do you want to listen to?"
       value={value}
       onChange={(e) => setValue(e.target.value)}

@@ -15,6 +15,7 @@ import useAuthModal from "@/hooks/useAuthModal";
 import { useUser } from "@/hooks/useUser";
 
 import Button from "./Button";
+import DynamicColorSwitch from "./DynamicColorSwitch";
 
 interface HeaderProps {
   children: React.ReactNode;
@@ -69,7 +70,12 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
   };
 
   return (
-    <div className={twMerge(`h-fit bg-gradient-to-b from-emerald-800 p-6`, className)}>
+    <div
+      className={twMerge(
+        `h-fit bg-gradient-to-b from-[var(--primary-dominant-color-var)] p-6`,
+        className
+      )}
+    >
       <div className="mb-4 flex w-full items-center justify-between">
         <div className="hidden items-center gap-x-2 md:flex">
           <DesktopViewButton
@@ -92,6 +98,7 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
           />
         </div>
         <div className="flex items-center justify-between gap-x-4">
+          {/* <DynamicColorSwitch /> */}
           {user ? (
             <div className="flex items-center gap-x-4">
               <Button
@@ -111,7 +118,7 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
             <>
               <div>
                 <Button
-                  className="bg-transparent font-medium text-neutral-300"
+                  className="bg-transparent font-medium text-[var(--primary-text-color-var)] shadow-lg"
                   onClick={() => authModal.onOpen("sign_up")}
                 >
                   Sign Up

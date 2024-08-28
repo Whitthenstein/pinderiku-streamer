@@ -11,7 +11,7 @@ const Liked = async () => {
   const songs = await getlikedSongs();
 
   return (
-    <div className="h-full w-full overflow-hidden overflow-y-auto rounded-lg bg-neutral-900">
+    <div className="h-full w-full overflow-hidden overflow-y-auto rounded-lg bg-[var(--primary-background-color-var)]">
       <Header className="">
         <div className="mt-20">
           <div className="flex flex-col items-center gap-x-5 md:flex-row">

@@ -18,7 +18,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onChange, title, description, chi
       onOpenChange={onChange}
     >
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-[2] bg-neutral-900/90 backdrop-blur-sm" />
+        <Dialog.Overlay className="bg-[var(--primary-background-color-var)]/90 fixed inset-0 z-[2] backdrop-blur-sm" />
         <Dialog.Content className="fixed left-[50%] top-[50%] z-[2] h-auto max-h-full w-full max-w-[250px] translate-x-[-50%] translate-y-[-50%] rounded-md border border-neutral-700 bg-neutral-800 p-[25px] drop-shadow-md focus:outline-none md:h-auto md:max-h-[85vh] md:max-w-[650px] lg:max-h-[100vh] lg:max-w-[850px]">
           {title && (
             <Dialog.Title className="mb-4 text-center text-xl font-bold">{title}</Dialog.Title>
@@ -28,7 +28,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onChange, title, description, chi
               {description}
             </Dialog.Description>
           )}
-          <div>{children}</div>
+          {children}
           <Dialog.Close asChild>
             <button
               onClick={() => onChange(!isOpen)}

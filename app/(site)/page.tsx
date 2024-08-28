@@ -12,15 +12,15 @@ const Home = async () => {
   const songs = await getSongs();
 
   return (
-    <div className="h-full w-full overflow-hidden overflow-y-auto rounded-lg bg-neutral-900">
+    <div className="h-full w-full overflow-hidden overflow-y-auto rounded-lg bg-[var(--primary-background-color-var)]">
       <Header className="">
         <div className="mb-2">
           <div className="flex items-center gap-4">
-            <div className="relative h-14 w-14 rounded-full shadow-lg">
+            <div className="relative h-14 w-14 rounded-full bg-[var(--primary-dominant-color-var)] shadow-lg">
               <Image
                 className="object-cover"
                 fill
-                src="/img/logo.png"
+                src="/img/logo-black.png"
                 alt="Logo"
                 sizes="w-14"
               />

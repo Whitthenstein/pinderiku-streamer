@@ -8,7 +8,7 @@ const loading = () => {
   return (
     <Box className="flex h-full items-center justify-center">
       <BounceLoader
-        color="#22c55e"
+        color="white"
         size={40}
       />
     </Box>

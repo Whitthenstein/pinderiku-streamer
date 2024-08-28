@@ -7,7 +7,7 @@ const WaveformLoader: React.FC<WaveformLoaderProps> = ({ id }) => {
     <div className="absolute right-1/4 top-1/2 w-1/2 items-center justify-center">
       <div
         id={id}
-        className="fade-animation pointer-events-none h-2 animate-ping select-none rounded bg-emerald-600"
+        className="fade-animation pointer-events-none h-2 animate-ping select-none rounded bg-[var(--secondary-dominant-color-var)]"
       />
     </div>
   );

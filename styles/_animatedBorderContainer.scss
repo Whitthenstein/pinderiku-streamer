@@ -5,6 +5,6 @@
 @layer utilities {
   // gradient
   .card-wrapper::before {
-    background: conic-gradient(rgba(6, 95, 70, 1) 90deg, transparent 180deg);
+    background: conic-gradient(var(--primary-dominant-color-var) 90deg, transparent 180deg);
   }
 }

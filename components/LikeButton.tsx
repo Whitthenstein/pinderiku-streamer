@@ -88,7 +88,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({ songId }) => {
       className="transition hover:opacity-75"
       onClick={handleLike}
     >
-      <Icon color={isLiked ? "#22c55e" : "white"}></Icon>
+      <Icon color={isLiked ? "white" : "white"}></Icon>
     </button>
   );
 };
