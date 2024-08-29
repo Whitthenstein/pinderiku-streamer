@@ -13,7 +13,7 @@
 
 [![Project Overview](/public/img/pinderiku-streamer-overview.jpg)](https://pinderiku.vercel.app/)
 
-*Live demo can be found [here](https://pinderiku.vercel.app/).*
+_Live demo can be found [here](https://pinderiku.vercel.app/)._
 
 I made this project because I wanted to host the songs for my hobby musical project on an independent platform. While doing it I managed to improve my skills in Typescript, and TailwindCSS, since I was not familiarized with these as much as I was with the other technologies used.
 
@@ -30,6 +30,10 @@ For this I used a package name [Wavesurfer.js](https://wavesurfer.xyz/), highly 
 ![Frequency Bars](/public/img/bars.gif)
 
 For these I used two animated HTML canvas, mirrored vertically, to show the frequencies of the playing song.
+
+- An animation on the song that is currently playing on the sidebar.
+
+![Song Playing Animation](/public/img/song-playing.gif)
 
 <!-- TODO:
     1. Describe my overall experience in a couple of sentences.
@@ -48,7 +52,17 @@ For these I used two animated HTML canvas, mirrored vertically, to show the freq
 
 ## Features
 
-At the moment the application only supports streaming of songs for one artist. Although it has support to sign in and register, these only allow the logged in user to like songs. I intend on expanding the app with more functionalities in the future, like the creation of playlists of each user.
+The app has all basic features of a song player. It can play, pause, skip songs, go forward/backwards on the current song, repeat functionality (repeat song, repeat all, no repeat) and volume control.
+
+There are also individual pages for each song with a waveform synchronized with the bottom player:
+
+![Individual Song Page](/public/img/individual-song-page.jpg)
+
+and if the user clicks on the song's image on the right side of the page's waveform, a modal pops up so the user can see the image more clearly:
+
+![Song Image Modal](/public/img/song-image.jpg)
+
+At the moment the application only supports streaming of songs for one artist. Although it has support to sign in and register, these only allow the logged in user to like songs. I intend on expanding the app with more functionalities in the future, like user created playlists.
 
 You can check what I'm currently working on for this project on [this Github project page](https://github.com/users/Whitthenstein/projects/5).
 
