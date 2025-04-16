@@ -3,16 +3,19 @@ import WaveSurfer from "wavesurfer.js";
 import { create } from "zustand";
 
 import usePlaylist from "./usePlaylist";
-import { RefObject } from "react";
 
 interface PlayerStore {
   // attributes
+  audioCtx: AudioContext | null;
+  mediaStream: MediaStream | null;
   waveform: WaveSurfer | null;
   media: HTMLAudioElement | null;
   songs: SongsMap;
   isLoading: boolean;
 
   // setters
+  setAudioContext: (audioCtx: AudioContext) => void;
+  setMediaStream: (mediaStream: MediaStream) => void;
   setWaveform: (waveform: WaveSurfer) => void;
   setMedia: (newMedia: HTMLAudioElement) => void;
   setSongs: (songs: SongsMap) => void;
@@ -30,12 +33,20 @@ interface PlayerStore {
 
 const usePlayer = create<PlayerStore>((set) => ({
   // initial state
+  audioCtx: null,
+  mediaStream: null,
   waveform: null,
   media: null,
   songs: new Map(),
   isLoading: true,
 
   // setters
+  setAudioContext: (audioCtx: AudioContext) => {
+    set({ audioCtx });
+  },
+  setMediaStream: (mediaStream: MediaStream) => {
+    set({ mediaStream });
+  },
   setWaveform: (waveform: WaveSurfer) => {
     set({ waveform });
   },

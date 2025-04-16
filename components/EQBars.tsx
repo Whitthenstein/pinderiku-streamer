@@ -5,9 +5,16 @@ import usePlayer from "@/hooks/usePlayer";
 import WaveformLoader from "./WaveformLoader";
 import usePlaylist from "@/hooks/usePlaylist";
 import { getCSSVariableValue } from "@/libs/helpers";
+import { isRunningFirefox } from "@/libs/utils";
 
 const EQBars = () => {
-  const { isLoading, media: mediaElement, waveform } = usePlayer((state) => state);
+  const {
+    isLoading,
+    media: mediaElement,
+    waveform,
+    mediaStream,
+    audioCtx
+  } = usePlayer((state) => state);
   const { getCurrentSongId } = usePlaylist((state) => state);
   const currentSongId = getCurrentSongId();
   const isPlaying = waveform?.isPlaying();
@@ -26,11 +33,9 @@ const EQBars = () => {
   }, []);
 
   useEffect(() => {
-    if (!canvasContainer) {
+    if (!canvasContainer || !audioCtx) {
       return;
     }
-    const audioCtx = new AudioContext();
-
     const [canvasOne, canvasTwo] = Array.from(canvasContainer.children) as HTMLCanvasElement[];
 
     const canvasCtxOne = canvasOne!.getContext("2d");
@@ -40,18 +45,22 @@ const EQBars = () => {
     const HEIGHT = canvasOne.height;
 
     const analyser = audioCtx.createAnalyser();
-    const stream = (mediaElement as any)?.captureStream();
 
-    if (!stream) {
+    if (!mediaStream) {
       return;
     }
 
-    if (stream.getAudioTracks().length === 0) {
+    if (mediaStream.getAudioTracks().length === 0) {
       return;
     }
 
-    const source = audioCtx.createMediaStreamSource(stream);
+    const source = audioCtx.createMediaStreamSource(mediaStream);
     source.connect(analyser);
+
+    if (isRunningFirefox()) {
+      const dest = audioCtx!.createMediaStreamSource(mediaStream!);
+      dest.connect(audioCtx!.destination);
+    }
 
     analyser.fftSize = 2048;
     const bufferLength = analyser.frequencyBinCount;
@@ -87,8 +96,7 @@ const EQBars = () => {
     }
 
     draw();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading, canvasContainer, mediaElement, currentSongId, isPlaying]);
+  }, [isLoading, canvasContainer, mediaElement, currentSongId, isPlaying, mediaStream, audioCtx]);
 
   useEffect(() => {
     eqLoaderElement?.classList.toggle("fade");

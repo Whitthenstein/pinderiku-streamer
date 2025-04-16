@@ -6,14 +6,16 @@ import usePlayer from "@/hooks/usePlayer";
 import WaveformLoader from "./WaveformLoader";
 import usePlay from "@/hooks/usePlay";
 import { generateElementsForWavesurfer } from "@/libs/waveSurferHelper";
-import { formatTime, getCSSVariableValue } from "@/libs/helpers";
+import { formatTime } from "@/libs/helpers";
+import { isRunningFirefox } from "@/libs/utils";
 
 interface WaveProps {
   setIsPlaying: (value: boolean) => void;
 }
 
 const Wave: React.FC<WaveProps> = ({ setIsPlaying }) => {
-  const { isLoading, setIsLoading, setMedia, setWaveform } = usePlayer((state) => state);
+  const { isLoading, setIsLoading, setMedia, setWaveform, setAudioContext, setMediaStream } =
+    usePlayer((state) => state);
 
   const { onFinish } = usePlay();
   const [waveformElement, setWaveformElement] = useState<HTMLElement | null>(null);
@@ -77,8 +79,17 @@ const Wave: React.FC<WaveProps> = ({ setIsPlaying }) => {
       onFinish();
     });
 
+    let stream: MediaStream;
+    if (isRunningFirefox()) {
+      stream = (audioMedia as any)?.mozCaptureStreamUntilEnded() as MediaStream;
+    } else {
+      stream = (audioMedia as any)?.captureStream() as MediaStream;
+    }
+
     setWaveform(wavesurfer);
     setMedia(audioMedia);
+    setAudioContext(new AudioContext());
+    setMediaStream(stream);
 
     // add custom cursor animation to shadowDOM
     const host = waveform.children[3];
